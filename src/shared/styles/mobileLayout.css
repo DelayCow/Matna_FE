@@ -1,0 +1,12 @@
+body {
+    background-color: #f8f9fa;
+    padding-bottom: 80px;
+}
+.mobile-container {
+    max-width: 920px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    min-height: 100vh;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
