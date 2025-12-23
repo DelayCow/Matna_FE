@@ -1,5 +1,6 @@
 import "@/shared/styles/card.css"
 import { SpicyLevelFormat } from "../utils/SpicyLevelFormat";
+import defaultProfile from "@/assets/user.png";
 
 
 interface RecipeCardProps {
@@ -34,7 +35,7 @@ export const RecipeCard = ({
     onClickDetail
 }: RecipeCardProps) => {
 
-    const displayProfile = profileImage || "/img/user.png";
+    const displayProfile = profileImage || defaultProfile;
 
     const spicyText = SpicyLevelFormat(spicy);
     return (
@@ -77,7 +78,7 @@ export const RecipeCard = ({
           </span>
           <span>
              
-            <img src="/src/assets/img/spicy.png" className="spicy" alt="spicy" /> {spicyText}
+            <img src="/src/assets/spicy.png" className="spicy" alt="spicy" /> {spicyText}
           </span>
         </div>
       </div>
