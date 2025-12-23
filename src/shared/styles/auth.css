@@ -1,0 +1,31 @@
+.mobile-container .form-control{
+    width: 20rem;
+}
+.mobile-container .form-control.min{
+    width: 13rem;
+}
+.auth-btn{
+    width: 100px;
+}
+
+small.available{
+    font-size: 0.7rem;
+    color: dodgerblue;
+}
+small.unavailable{
+    font-size: 0.7rem;
+    color: red;
+}
+small.notshow{
+    display:none;
+}
+.form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+.logo-img{
+    width: 60%;
+}
+.input-group{
+    width:20rem;
+}
