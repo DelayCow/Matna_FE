@@ -1,29 +1,14 @@
 import "../shared/styles/auth.css";
 import logo from "../assets/matna_logo.png";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AuthInput from "../shared/components/AuthInput";
 import Divider from "../features/auth/components/divider";
-import loginApi from "../features/auth/services/LoginApi";
+import { useNavigate } from "react-router-dom";
+import { useLogin } from "../features/auth/hooks/useLogin";
+
 
 export default function Login(){
+    const { memberId, setMemberId, password, setPassword, message, handleLogin } = useLogin();
     const navigate = useNavigate();
-    const [memberId, setMemberId] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [message, setMessage] = useState<string>("ㅤ");
-
-    const handleLogin = async function(){
-        try{
-            const result = await loginApi(memberId, password);
-            if(result.message === 'loginOk'){
-                navigate(result.redirectUrl);
-            }
-        }catch{
-            setMessage('아이디/비밀번호를 다시 입력해주세요')
-            setMemberId("");
-            setPassword("");
-        }
-    }
 
     const moveRegister = function(){
         navigate("/register")
