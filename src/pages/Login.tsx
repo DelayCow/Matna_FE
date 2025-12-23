@@ -1,5 +1,48 @@
+import "../shared/styles/auth.css";
+import logo from "../assets/matna_logo.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthInput from "../shared/components/AuthInput";
+import Divider from "../features/auth/components/divider";
+import loginApi from "../features/auth/services/LoginApi";
+
 export default function Login(){
-    return(<>
-        
-    </>)
+    const navigate = useNavigate();
+    const [memberId, setMemberId] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [message, setMessage] = useState<string>("ㅤ");
+
+    const handleLogin = async function(){
+        try{
+            const result = await loginApi(memberId, password);
+            if(result.message === 'loginOk'){
+                navigate(result.redirectUrl);
+            }
+        }catch{
+            setMessage('아이디/비밀번호를 다시 입력해주세요')
+            setMemberId("");
+            setPassword("");
+        }
+    }
+
+    const moveRegister = function(){
+        navigate("/register")
+    }
+
+    return(
+    <div className="d-flex flex-column align-items-center justify-content-center min-vh-100">
+        <div className="text-center mb-5">
+            <img className="logo-img" src={logo} alt="로고"/>
+        </div>
+
+        <AuthInput type='text' label='아이디' name='memberId' value={memberId} inputHandling={(e) => setMemberId(e.target.value)}/>
+        <AuthInput type='password' label='비밀번호' name='password' value={password} inputHandling={(e) => setPassword(e.target.value)}/>
+
+        <small className="text-danger mb-3">{message}</small>
+
+        <button onClick={handleLogin} className="btn btn-warning auth-btn">로그인</button>
+        <Divider text='회원 가입'/>
+        <button onClick={moveRegister} className="btn btn-outline-warning auth-btn">회원가입</button>
+    </div>
+    )
 }
