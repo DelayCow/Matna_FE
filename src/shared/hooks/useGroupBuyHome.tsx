@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { 
     getPeriodGroupBuyList, 
-    getQuantityGroupBuyList,
+    getQuantityGroupBuyList
+} from "../services/api/GroupBuyHomeApi";
+import {
     type PeriodGroupBuy,
     type QuantityGroupBuy
-} from "../services/GroupBuyHomeApi";
+} from "../services/data/GroupBuyHomeData";
 
 export const useGroupBuyHome = () => {
     // 탭 상태
