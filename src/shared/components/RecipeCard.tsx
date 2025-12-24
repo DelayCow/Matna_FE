@@ -1,9 +1,9 @@
 import "@/shared/styles/card.css"
-import { SpicyLevelFormat } from "../utils/SpicyLevelFormat";
+import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
 import defaultProfile from "@/assets/user.png";
+import { DifficultyFormat } from "../services/data/DifficultyFormat";
 
-
-interface RecipeCardProps {
+export interface RecipeCardProps {
     recipeNo: number;
     thumbnail: string;
     title: string;
@@ -38,6 +38,7 @@ export const RecipeCard = ({
     const displayProfile = profileImage || defaultProfile;
 
     const spicyText = SpicyLevelFormat(spicy);
+    const difficultyText = DifficultyFormat(difficulty);
     return (
         <div className = "card card-custom card-wide"
             onClick = {() => onClickDetail(recipeNo)}
@@ -59,7 +60,7 @@ export const RecipeCard = ({
             <div className="small text-muted">
               <span className="text-warning">
                
-                <i className="bi bi-star-fill"></i> {rating.toFixed(1)}
+                <i className="bi bi-star-fill"></i> {Number(rating || 0).toFixed(1)}
               </span>
               <span> | 후기 {reviewCount}</span>
             </div>
@@ -74,7 +75,7 @@ export const RecipeCard = ({
             <i className="bi bi-clock"></i> {makeTime}분
           </span>
           <span className="text-secondary me-3">
-            <i className="bi bi-star"></i> {difficulty}
+            <i className="bi bi-star"></i> {difficultyText}
           </span>
           <span>
              

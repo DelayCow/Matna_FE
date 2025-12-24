@@ -1,8 +1,8 @@
 import "@/shared/styles/card.css"
-import { DateFormat } from "../utils/DateFormat";
+import { DateFormat } from "@/shared/services/data/DateFormat";
 import defaultProfile from "@/assets/user.png";
 
-interface ReviewCardProps {
+export interface ReviewCardProps {
     reviewNo: number,
     reviewImage: string,
     writerProfileImage?: string,
