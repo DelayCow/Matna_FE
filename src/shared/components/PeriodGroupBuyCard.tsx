@@ -5,7 +5,7 @@ interface PeriodGroupBuy {
     periodGroupBuyNo: number;
     groupBuyImageUrl: string;
     title: string;
-    creatorImageUrl: string;
+    creatorImageUrl?: string;
     nickname: string;
     dueDate: string;
     minPricePerPerson: number;
@@ -21,6 +21,7 @@ interface PeriodGroupBuyCardProps{
 }
 
 export default function PeriodGroupBuyCard({data, onClick}: PeriodGroupBuyCardProps){    
+    const creatorImageUrl = data.creatorImageUrl || '../src/assets/user.png';
     const formatAddress = (fullAddress: string): string =>{
         if(!fullAddress) return '주소 정보 없음';
 
@@ -40,12 +41,13 @@ export default function PeriodGroupBuyCard({data, onClick}: PeriodGroupBuyCardPr
         }
     };
     return(
+        <div className="col d-flex justify-content-center">
         <div className="card card-custom card-wide" data-type="periodGroupBuy" data-no={data.periodGroupBuyNo}
             onClick={handleClick} style={{cursor: onClick ? 'pointer' : 'default'}}>
         <img src={data.groupBuyImageUrl} className="card-img-top" alt={data.title} />
         <div className="card-body px-0 py-2">
             <div className="d-flex align-items-center mb-1">
-                <img src={data.creatorImageUrl} className="profile-img" alt="User" />
+                <img src={creatorImageUrl} className="profile-img" alt="User" />
                 <div className="overflow-hidden w-100">
                     <div className="d-flex overflow-hidden w-100">
                         <small className="fw-bold text-nowrap">{data.nickname}</small>
@@ -63,6 +65,7 @@ export default function PeriodGroupBuyCard({data, onClick}: PeriodGroupBuyCardPr
                     <span className="badge badge-location">{address}</span>
                 </div>
             </div>
+        </div>
         </div>
     );
 }
