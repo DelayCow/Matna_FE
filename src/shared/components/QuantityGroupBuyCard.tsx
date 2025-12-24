@@ -4,7 +4,7 @@ interface QuantityGroupBuy{
     quantityGroupBuyNo: number;
     groupBuyImageUrl: string;
     title: string;
-    creatorImageUrl: string;
+    creatorImageUrl?: string;
     nickname: string;
     remainingQty: number;
     quantity: number;
@@ -20,6 +20,7 @@ interface QuantityGroupBuyProps {
 }
 
 export default function QuantityGroupBuyCard({data, onClick}: QuantityGroupBuyProps){
+    const creatorImageUrl = data.creatorImageUrl || '../src/assets/user.png';
     const formatAddress = (fullAddress: string): string =>{
         if(!fullAddress) return '주소 정보 없음';
 
@@ -45,7 +46,7 @@ export default function QuantityGroupBuyCard({data, onClick}: QuantityGroupBuyPr
         <img src={data.groupBuyImageUrl} className="card-img-top" alt={data.title} />
         <div className="card-body px-0 py-2">
             <div className="d-flex align-items-center mb-1">
-                <img src={data.creatorImageUrl} className="profile-img" alt="User" />
+                <img src={creatorImageUrl} className="profile-img" alt="User" />
                 <div className="overflow-hidden w-100">
                     <div className="d-flex overflow-hidden w-100">
                         <small className="fw-bold text-nowrap">{data.nickname}</small>

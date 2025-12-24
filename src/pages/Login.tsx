@@ -1,7 +1,7 @@
 import "../shared/styles/auth.css";
 import logo from "../assets/matna_logo.png";
 import AuthInput from "../shared/components/AuthInput";
-import Divider from "../features/auth/components/divider";
+import Divider from "../features/auth/components/Divider";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../features/auth/hooks/useLogin";
 

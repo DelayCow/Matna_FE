@@ -27,12 +27,12 @@ export default function DueDateCountDown({ dueDate, className='', layout='inline
             
             const D_IN_MS = 1000 * 60 * 60 * 24;
             const H_IN_MS = 1000 * 60 * 60;
-            const M_IM_MS = 1000 * 60;
+            const M_IN_MS = 1000 * 60;
 
             const days = Math.floor(distance / D_IN_MS);
             const hours = Math.floor((distance % D_IN_MS) / H_IN_MS);
-            const minutes = Math.floor((distance % H_IN_MS) / H_IN_MS);
-            const seconds = Math.floor((distance % M_IM_MS) / 1000);
+            const minutes = Math.floor((distance % H_IN_MS) / M_IN_MS);
+            const seconds = Math.floor((distance % M_IN_MS) / 1000);
 
             setCountdown(
                 `남은 기간 : ${days}일 ${String(hours).padStart(2, '0')}시간 ${String(minutes).padStart(2, '0')}분 ${String(seconds).padStart(2, '0')}초`
