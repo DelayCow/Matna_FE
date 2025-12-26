@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { MemberProfile } from '../services/data/MypageData';
+import type { MemberProfile } from '@/features/mypage/services/data/MyPageData';
 import defaultProfile from "@/assets/user.png";
 
 interface MyPageProfileCardProps {
@@ -33,6 +33,7 @@ export const MyPageProfileCard = ({
             <ul className="custom-dropdown show" style={{ position: 'absolute', right: 0, top: '100%', zIndex: 1000 }}>
               <li><a href="#" onClick={(e) => { e.preventDefault(); onEditInfo(); setShowMenu(false); }}>정보 수정</a></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); onLogout(); }}>로그아웃</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); onLogout(); }}>탈퇴</a></li>
             </ul>
           )}
         </div>

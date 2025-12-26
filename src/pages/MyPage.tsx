@@ -3,33 +3,26 @@ import { useMyPage } from "@/features/mypage/hooks/useMyPage";
 import { MyPageProfileCard } from "@/features/mypage/components/MyPageProfile";
 
 import { ReviewCard, type ReviewCardProps } from "@/shared/components/ReviewCard";
-import { MyPageRecipeCard, type MyPageRecipe } from "@/features/mypage/components/MypageRecipeCard";
+import { MyPageRecipeCard, type MyPageRecipe } from "@/features/mypage/components/MyPageRecipeCard";
 import { MyPageGroupBuyCard, type GroupBuyItem } from "@/features/mypage/components/MyPageGroupBuyCard";
 
 import "@/features/mypage/styles/mypage.css";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+
 
 export default function MyPage() {
-    const navigate = useNavigate();
+ 
     const {
         member, isOwner, recipes, reviews, groupBuys, isLoading,
         activeMainTab, setActiveMainTab, contentSubTab, setContentSubTab,
-        groupSubTab, setGroupSubTab, groupFilter, setGroupFilter, totalGroupCount
+        groupSubTab, setGroupSubTab, groupFilter, setGroupFilter, totalGroupCount,
+        handleDeleteRecipe, 
+        handleLogout,       
+        handleReport
     } = useMyPage();
 
-    const [showMenu, setShowMenu] = useState(false);
+   
 
-    const handleLogout = () => {
-        sessionStorage.removeItem("au");
-        window.location.href = "/login";
-    };
-
-    const handleDeleteRecipe = (id: number) => { 
-    if (window.confirm("정말 이 레시피를 삭제하시겠습니까?")) {
-        console.log("레시피 삭제 요청 ID:", id);
-    }
-};
+   
 
     if (isLoading) return <div className="p-5 text-center">데이터를 가져오는 중...</div>;
 
@@ -42,7 +35,9 @@ export default function MyPage() {
             <MyPageProfileCard 
                 member={member} 
                 isOwner={isOwner} 
-                onReport={(no) => console.log("신고유저번호:", no)} 
+                onReport={handleReport} 
+                onLogout={handleLogout} 
+                onEditInfo={() => console.log("모달 띄우기")}
             />
 
 
@@ -74,7 +69,7 @@ export default function MyPage() {
                                         
                                         key={r.id}
                                         item={r}
-                                        isOwner={true}
+                                        isOwner={isOwner}
                                         // onDelete 역시 r.id를 넘겨줘야 함
                                         onDelete={() => handleDeleteRecipe(r.id)}
                                     />
@@ -109,7 +104,7 @@ export default function MyPage() {
                                     <MyPageGroupBuyCard
                                         key={item.groupBuyNo}
                                         item={item}
-                                        step={item.step}
+                                        // step={item.step}
                                         isHost={groupSubTab === 'host'}
                                         onAction={(action, data) => console.log(action, data)}
                                     />

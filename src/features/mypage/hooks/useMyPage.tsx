@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import MyPageApi from "@/features/mypage/services/api/MypageApi";
+import MyPageApi from "@/features/mypage/services/api/MyPageApi";
 
+import { type MemberProfile } from "@/features/mypage/services/data/MyPageData";
+import { type MyPageRecipe} from "@/features/mypage/components/MyPageRecipeCard";
+import { type ReviewCardProps } from "@/shared/components/ReviewCard";
+import { type GroupBuyItem } from "../components/MyPageGroupBuyCard";
 
-
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type { MyPageGroupBuy } from "../components/MyPageGroupBuyCard";
 
 export const useMyPage = () => {
@@ -22,6 +25,55 @@ export const useMyPage = () => {
 
   const [totalGroupCount, setTotalGroupCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  
+
+  // const handleEditInfo = () => {
+  //       showPasswordCheckModal 
+        
+  //   };
+
+  const handleReport = async (targetNo: number) => {
+        // 본인을 신고하는 경우 방어 로직 (이미 UI에서 막았지만 이중 체크)
+        if (isOwner) return;
+
+        const reason = window.prompt("신고 사유를 입력해주세요."); // 임시로 prompt 사용
+        if (!reason) return;
+
+        try {
+            // 💡 나중에 MyPageApi.reportUser(targetNo, reason) 형태로 구현될 부분
+            console.log(`신고 대상: ${targetNo}, 사유: ${reason}`);
+            
+            // API 호출 예시 (현재는 로그만)
+            // await MyPageApi.reportUser({ targetMemberNo: targetNo, reason });
+            
+            alert("신고가 정상적으로 접수되었습니다.");
+        } catch (error) {
+            console.error("신고 실패:", error);
+            alert("신고 처리 중 오류가 발생했습니다.");
+        }
+    };
+
+  const handleDeleteRecipe = async (id: number) => {
+        if (!window.confirm("삭제할까요?")) return;
+        
+        try {
+            await MyPageApi.deleteRecipe(id); // API 파일 호출
+            setRecipes(prev => prev.filter(r => r.id !== id)); // 상태 업데이트
+            alert("삭제 완료!");
+        } catch (e) {
+            alert("삭제 실패");
+        }
+    };
+
+
+    const handleLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      sessionStorage.removeItem("au");
+      window.location.href = "/login";
+    }
+  };
+
+
 
   // 공동구매 단계 계산 로직 (내부 함수)
   const calculateStep = (status: string): number => {
@@ -54,9 +106,7 @@ export const useMyPage = () => {
 
 
         setIsOwner(targetMemberNo === currentUser.memberNo);
-        
-        console.log(targetMemberNo);
-        console.log(currentUser.memberNo);
+
 
         const [profileData, recipeData, reviewData, hostData, partData] = await Promise.all([
         
@@ -114,6 +164,8 @@ export const useMyPage = () => {
     contentSubTab, setContentSubTab,
     groupSubTab, setGroupSubTab,
     groupFilter, setGroupFilter,
-    isOwner
+    isOwner, handleDeleteRecipe,
+    handleLogout, handleReport
+    // handleEditInfo
   };
 };

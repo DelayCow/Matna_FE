@@ -16,6 +16,8 @@ export const RecipeCard = ({
     onClickDetail,
 }: RecipeCardProps) => {
 
+  if (!recipe) return null;
+  
   const {
     thumbnailUrl,
     title,

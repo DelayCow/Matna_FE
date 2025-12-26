@@ -36,14 +36,15 @@ export interface GroupBuyItem extends MyPageGroupBuy {
 
 interface MyPageGroupBuyCardProps {
   item: GroupBuyItem;
-  step: number;
+  // step: number;
   isHost: boolean;
   onAction: (action: string, item: GroupBuyItem) => void;
 }
-
-export const MyPageGroupBuyCard = ({ item, step, isHost, onAction }: MyPageGroupBuyCardProps) => {
+// step,
+export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCardProps) => {
   const steps = ["모집", "상품결제", "상품도착", "나눔진행"];
 
+  const currentStep = item.step || 1;
 
   const renderActionBtn = () => {
     // 🛠️ 변경 포인트: 인터페이스 덕분에 타입 변환 없이 바로 접근 가능
@@ -72,9 +73,11 @@ export const MyPageGroupBuyCard = ({ item, step, isHost, onAction }: MyPageGroup
           <div className="timeline-steps">
             {steps.map((stepName, index) => {
               const stepNum = index + 1;
-              // mypage.css에 정의된 .active, .current 클래스가 여기서 불을 켭니다.
-              let activeClass = (stepNum < step) ? "active" : (stepNum === step ? "current" : "");
               
+              // let activeClass = (stepNum < step) ? "active" : (stepNum === step ? "current" : "");
+              const activeClass = (stepNum < currentStep) 
+                ? "active" 
+                : (stepNum === currentStep ? "current" : "");
               return (
                 <div key={stepName} className={`step-item ${activeClass}`}>
                   <div className="step-circle"></div>
