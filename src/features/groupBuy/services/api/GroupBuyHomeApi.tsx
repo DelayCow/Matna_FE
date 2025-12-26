@@ -1,4 +1,4 @@
-import AxiosInterceptor from "../AxiosInterceptor";
+import AxiosInterceptor from "@/shared/services/AxiosInterceptor";
 import { 
     type PeriodGroupBuy, 
     type QuantityGroupBuy, 
