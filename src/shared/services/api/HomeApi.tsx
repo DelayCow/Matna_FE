@@ -25,8 +25,6 @@ export const fetchHomeData = async () => {
         difficulty: r.difficulty,
         spicy: r.spicyLevel           
     }));
-
-    console.log(mappedRecipes);
     return {
         recipes: mappedRecipes || [],
         quantityBuys: qtyRes.data || [],

@@ -37,6 +37,7 @@ export const ReviewCard = ({
       
       <div className="card-body px-0 py-2">
         <div className="d-flex align-items-center mb-1">
+          
           <img src={displayProfile} className="profile-img" alt="User" />
           
           <div className="overflow-hidden w-100">

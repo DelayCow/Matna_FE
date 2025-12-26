@@ -39,7 +39,7 @@ export default function Home() {
                 scrollRef={recipeRef}
                 onScroll={(dir) => scroll(recipeRef, dir)}
             >
-                {recipes.map((item: any) => (
+                {recipes.map((item: any ) => (
                     <div key={item.recipeNo} className="flex-shrink-0" style={{ width: '250px' }}>
                         <RecipeCard {...item} onClickDetail={(no) => console.log(no)} />
                     </div>
