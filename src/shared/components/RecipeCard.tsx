@@ -1,48 +1,39 @@
 import "@/shared/styles/card.css"
 import { SpicyLevelFormat } from "../utils/SpicyLevelFormat";
 import defaultProfile from "@/assets/user.png";
+import type { Recipe } from "../services/data/RecipeHomeData";
 
 
 interface RecipeCardProps {
-    recipeNo: number;
-    thumbnail: string;
-    title: string;
-    nickname: string;
-    profileImage?: string;
-    rating: number;
-    reviewCount: number;
-    servings: number;
-    makeTime: number;
-    difficulty: string;
-    spicy: number; // 매움 레벨 db = 숫자 => 매운맛 단계
-    onClickDetail: (recipeNo: number) => void;
+    recipe : Recipe;
+    onClickDetail?: () => void;
 }
 
-
-
 export const RecipeCard = ({
-    recipeNo,
-    thumbnail,
+    recipe,
+    onClickDetail,
+}: RecipeCardProps) => {
+  const {
+    thumbnailUrl,
     title,
-    nickname,
-    profileImage,
-    rating,
+    writerNickname,
+    writerProfile,
+    averageRating,
     reviewCount,
     servings,
-    makeTime,
+    prepTime,
     difficulty,
-    spicy,
-    onClickDetail
-}: RecipeCardProps) => {
+    spicyLevel,
+  } = recipe;
 
-    const displayProfile = profileImage || defaultProfile;
+    const displayProfile = writerProfile || defaultProfile;
 
-    const spicyText = SpicyLevelFormat(spicy);
+    const spicyText = SpicyLevelFormat(spicyLevel);
     return (
         <div className = "card card-custom card-wide"
-            onClick = {() => onClickDetail(recipeNo)}
+            onClick = {onClickDetail}
             style = {{ cursor: 'pointer'}}>
-                <img src = {thumbnail} className = "card-img-top" alt = {title} />
+                <img src = {thumbnailUrl} className = "card-img-top" alt = {title} />
 
 
             <div className="card-body px-0 py-2">
@@ -51,7 +42,7 @@ export const RecipeCard = ({
 
                     <div className="overflow-hidden w-100">
             <div className="d-flex overflow-hidden w-100">
-              <small className="fw-bold text-nowrap">{nickname}</small>
+              <small className="fw-bold text-nowrap">{writerNickname}</small>
               
               <p className="card-text text-truncate mb-0 ms-2">{title}</p>
             </div>
@@ -59,7 +50,7 @@ export const RecipeCard = ({
             <div className="small text-muted">
               <span className="text-warning">
                
-                <i className="bi bi-star-fill"></i> {rating.toFixed(1)}
+                <i className="bi bi-star-fill"></i> {averageRating.toFixed(1)}
               </span>
               <span> | 후기 {reviewCount}</span>
             </div>
@@ -71,7 +62,7 @@ export const RecipeCard = ({
             <i className="bi bi-person"></i> {servings}인분
           </span>
           <span className="text-secondary me-3">
-            <i className="bi bi-clock"></i> {makeTime}분
+            <i className="bi bi-clock"></i> {prepTime}분
           </span>
           <span className="text-secondary me-3">
             <i className="bi bi-star"></i> {difficulty}
