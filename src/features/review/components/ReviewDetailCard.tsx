@@ -13,7 +13,7 @@ interface ReviewCardProps {
     isList: boolean;
 }
 
-export default function ReviewCard({ review, recipeNo, isList }:ReviewCardProps) {
+export default function ReviewDetailCard({ review, recipeNo, isList }:ReviewCardProps) {
     const navigate = useNavigate();
     const [isEditOpen, setIsEditOpen] = useState(false);
 
