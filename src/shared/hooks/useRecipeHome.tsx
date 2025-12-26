@@ -42,8 +42,7 @@ export function useRecipeHome() {
 
   useEffect(() => {
     loadRecipes(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spicyLevel, keyword, sort]);
+    }, [spicyLevel, keyword, sort]);
 
   return {
     recipes,
