@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 
 import SearchBar from "@/shared/components/SearchBar";
-import SortDropdown from "@/shared/components/SortDropDown";
+import SortDropdown, { type SortOption } from "@/shared/components/SortDropDown";
 import SpicyFilter from "@/shared/components/SpicyFilter";
 import { RecipeCard } from "@/shared/components/RecipeCard";
-import { RECIPE_SORT_OPTIONS } from "@/features/recipe/components/recipeSortOptions";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useRecipeHome } from "@/shared/hooks/useRecipeHome";
 
+const RECIPE_SORT_OPTIONS: SortOption[] = [
+  { label: "최신순", value: "inDate" },
+  { label: "후기많은순", value: "reviewCount" },
+];
 
 export default function RecipeHome() {
   const navigate = useNavigate();
