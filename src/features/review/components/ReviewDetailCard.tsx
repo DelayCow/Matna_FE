@@ -9,7 +9,7 @@ import type { Review } from "../services/data/ReviewData";
 
 interface ReviewCardProps {
     review: Review;
-    recipeNo: string | undefined;
+    recipeNo: number | null;
     isList: boolean;
 }
 

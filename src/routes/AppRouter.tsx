@@ -6,7 +6,8 @@ import MobileLayout from "../shared/components/layout/MobileLayout";
 import RecipeHome from "../pages/RecipeHome";
 import GroupBuyHome from "../pages/GroupBuyHome";
 import MyPage from "../pages/MyPage";
-import ReviewList from "@/pages/ReviewList";
+import ReviewList from "../pages/ReviewList";
+import ReviewDetail from "../pages/ReviewDetail";
 
 const MemberRoute = function(){
     const token = sessionStorage.getItem('au');
@@ -25,6 +26,7 @@ export default function AppRouter(){
                             <Route path="/groupBuy" element={<GroupBuyHome />}/>
                             <Route path="/mypage" element={<MyPage />}/>
                             <Route path="/review/recipe/:recipeNo" element={<ReviewList />}/>
+                            <Route path="/review/detail/:reviewNo" element={<ReviewDetail />}/>
                         </Route>
                     </Route>
                     
