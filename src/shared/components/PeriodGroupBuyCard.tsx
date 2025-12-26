@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import DueDateCountDown from "./DueDateCountDown";
 import "../styles/groupBuyCard.css";
 
@@ -17,10 +18,10 @@ interface PeriodGroupBuy {
 
 interface PeriodGroupBuyCardProps{
     data: PeriodGroupBuy;
-    onClick?: (no: number) => void;
 }
 
-export default function PeriodGroupBuyCard({data, onClick}: PeriodGroupBuyCardProps){    
+export default function PeriodGroupBuyCard({data}: PeriodGroupBuyCardProps){    
+    const navigate = useNavigate();
     const creatorImageUrl = data.creatorImageUrl || '../src/assets/user.png';
     const formatAddress = (fullAddress: string): string =>{
         if(!fullAddress) return '주소 정보 없음';
@@ -36,14 +37,11 @@ export default function PeriodGroupBuyCard({data, onClick}: PeriodGroupBuyCardPr
     const address = formatAddress(data.shareLocation);
 
     const handleClick = () => {
-        if(onClick) {
-            onClick(data.periodGroupBuyNo);
-        }
+        navigate(`/periodGroupBuy/detail/${data.periodGroupBuyNo}`);
     };
     return(
-        <div className="col d-flex justify-content-center">
         <div className="card card-custom card-wide" data-type="periodGroupBuy" data-no={data.periodGroupBuyNo}
-            onClick={handleClick} style={{cursor: onClick ? 'pointer' : 'default'}}>
+            onClick={handleClick} style={{cursor: 'pointer'}}>
         <img src={data.groupBuyImageUrl} className="card-img-top" alt={data.title} />
         <div className="card-body px-0 py-2">
             <div className="d-flex align-items-center mb-1">
@@ -65,7 +63,6 @@ export default function PeriodGroupBuyCard({data, onClick}: PeriodGroupBuyCardPr
                     <span className="badge badge-location">{address}</span>
                 </div>
             </div>
-        </div>
         </div>
     );
 }
