@@ -40,7 +40,6 @@ export default function PeriodGroupBuyCard({data}: PeriodGroupBuyCardProps){
         navigate(`/periodGroupBuy/detail/${data.periodGroupBuyNo}`);
     };
     return(
-        <div className="col d-flex justify-content-center">
         <div className="card card-custom card-wide" data-type="periodGroupBuy" data-no={data.periodGroupBuyNo}
             onClick={handleClick} style={{cursor: 'pointer'}}>
         <img src={data.groupBuyImageUrl} className="card-img-top" alt={data.title} />
@@ -64,7 +63,6 @@ export default function PeriodGroupBuyCard({data}: PeriodGroupBuyCardProps){
                     <span className="badge badge-location">{address}</span>
                 </div>
             </div>
-        </div>
         </div>
     );
 }

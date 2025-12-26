@@ -37,7 +37,7 @@ export default function ParticipantInGroupBuy({participants, type, unit}: GroupB
     };
 
     const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-        e.currentTarget.src = '../assets/user.png';
+        e.currentTarget.src = '';
     };
 
     return(
@@ -51,7 +51,7 @@ export default function ParticipantInGroupBuy({participants, type, unit}: GroupB
                 <div>
                     {participants && participants.length > 0 ? (
                         participants.map((participant) => {
-                            const profileUrl = participant.profileUrl || '../assets/user.png';
+                            const profileUrl = participant.profileUrl || "@/assets/user.png";
                             const date = formatDate(participant.participatedDate);
 
                             return (
