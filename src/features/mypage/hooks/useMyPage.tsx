@@ -1,18 +1,25 @@
 import { useState, useEffect } from "react";
-import MyPageApi from "@/features/mypage/services/api/MypageApi"; // API 서비스 임포트
+import MyPageApi from "@/features/mypage/services/api/MypageApi";
+
+
+
+import { useParams } from "react-router-dom";
+import type { MyPageGroupBuy } from "../components/MyPageGroupBuyCard";
 
 export const useMyPage = () => {
-  // ✅ 1. 모든 state에 정확한 타입 부여 (any 제거)
+
+  const { id } = useParams<{ id: string }>();
+  const [isOwner, setIsOwner] = useState<boolean>(false);
   const [member, setMember] = useState<MemberProfile | null>(null);
   const [recipes, setRecipes] = useState<MyPageRecipe[]>([]);
   const [reviews, setReviews] = useState<ReviewCardProps[]>([]);
   const [groupBuys, setGroupBuys] = useState<GroupBuyItem[]>([]);
-  
+
   const [activeMainTab, setActiveMainTab] = useState<"content" | "group">("content");
   const [contentSubTab, setContentSubTab] = useState<"recipe" | "review">("recipe");
   const [groupSubTab, setGroupSubTab] = useState<"host" | "participate">("host");
   const [groupFilter, setGroupFilter] = useState("ALL");
-  
+
   const [totalGroupCount, setTotalGroupCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,10 +36,10 @@ export const useMyPage = () => {
   };
 
   // 공동구매 데이터 가공 (step 주입)
-  const formatGroupBuyData = (data: any[]): GroupBuyItem[] => {
+  const formatGroupBuyData = (data: MyPageGroupBuy[]): GroupBuyItem[] => {
     return (data || []).map(item => ({
       ...item,
-      step: calculateStep(item.status) 
+      step: calculateStep(item.status)
     }));
   };
 
@@ -41,26 +48,35 @@ export const useMyPage = () => {
     const initMyPage = async () => {
       try {
         const currentUser = await MyPageApi.fetchCurrentUser();
-        const memberNo = currentUser.memberNo;
+        
+
+        const targetMemberNo = id ? parseInt(id) : currentUser.memberNo;
+
+
+        setIsOwner(targetMemberNo === currentUser.memberNo);
+        
+        console.log(targetMemberNo);
+        console.log(currentUser.memberNo);
 
         const [profileData, recipeData, reviewData, hostData, partData] = await Promise.all([
-          MyPageApi.fetchProfile(memberNo),
-          MyPageApi.fetchRecipes(memberNo),
-          MyPageApi.fetchReviews(memberNo),
-          MyPageApi.fetchGroupBuys(memberNo, "host", "ALL"),
-          MyPageApi.fetchGroupBuys(memberNo, "participation", "ALL")
+        
+           MyPageApi.fetchProfile(targetMemberNo),
+          MyPageApi.fetchRecipes(targetMemberNo),
+          MyPageApi.fetchReviews(targetMemberNo),
+          MyPageApi.fetchGroupBuys(targetMemberNo, "host", "ALL"),
+          MyPageApi.fetchGroupBuys(targetMemberNo, "participation", "ALL")
         ]);
 
-        setMember({ ...profileData, memberNo }); 
-        
+        setMember({ ...profileData, memberNo: targetMemberNo });
+
         // ✅ 레시피: 이제 MyPageRecipe 인터페이스(id, image, rating 등)에 맞춰 들어옵니다.
         setRecipes(recipeData || []);
         setReviews(reviewData || []);
-        
+
         // ✅ 공동구매: formatGroupBuyData를 사용하여 step을 주입해서 저장합니다.
         const formattedHost = formatGroupBuyData(hostData);
         const formattedPart = formatGroupBuyData(partData);
-        
+
         setTotalGroupCount(formattedHost.length + formattedPart.length);
         setGroupBuys(formattedHost); // 초기값은 '개설' 탭 데이터
 
@@ -71,7 +87,7 @@ export const useMyPage = () => {
       }
     };
     initMyPage();
-  }, []);
+  }, [id]);
 
   // 2. 탭/필터 변경 시 공동구매 데이터 리로드
   useEffect(() => {
@@ -81,9 +97,9 @@ export const useMyPage = () => {
       try {
         const typePath = groupSubTab === "host" ? "host" : "participation";
         const data = await MyPageApi.fetchGroupBuys(member.memberNo, typePath, groupFilter);
-        
+
         // ✅ 여기서도 반드시 가공 함수를 거쳐야 MyPage.tsx에서 item.step을 읽을 수 있습니다.
-        setGroupBuys(formatGroupBuyData(data)); 
+        setGroupBuys(formatGroupBuyData(data));
       } catch (error) {
         console.error("공동구매 데이터 로드 실패:", error);
         setGroupBuys([]);
@@ -97,6 +113,7 @@ export const useMyPage = () => {
     activeMainTab, setActiveMainTab,
     contentSubTab, setContentSubTab,
     groupSubTab, setGroupSubTab,
-    groupFilter, setGroupFilter
+    groupFilter, setGroupFilter,
+    isOwner
   };
 };

@@ -1,49 +1,44 @@
 import "@/shared/styles/card.css"
 import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
 import defaultProfile from "@/assets/user.png";
-import { DifficultyFormat } from "../services/data/DifficultyFormat";
 
-export interface RecipeCardProps {
-    recipeNo: number;
-    thumbnail: string;
-    title: string;
-    nickname: string;
-    profileImage?: string;
-    rating: number;
-    reviewCount: number;
-    servings: number;
-    makeTime: number;
-    difficulty: string;
-    spicy: number; // 매움 레벨 db = 숫자 => 매운맛 단계
-    onClickDetail: (recipeNo: number) => void;
+import type { Recipe } from "../services/data/RecipeHomeData";
+
+
+interface RecipeCardProps {
+    recipe : Recipe;
+    onClickDetail?: () => void;
+
 }
 
-
-
 export const RecipeCard = ({
-    recipeNo,
-    thumbnail,
-    title,
-    nickname,
-    profileImage,
-    rating,
-    reviewCount,
-    servings,
-    makeTime,
-    difficulty,
-    spicy,
-    onClickDetail
+    recipe,
+    onClickDetail,
 }: RecipeCardProps) => {
 
-    const displayProfile = profileImage || defaultProfile;
+  const {
+    thumbnailUrl,
+    title,
+    writerNickname,
+    writerProfile,
+    averageRating,
+    reviewCount,
+    servings,
+    prepTime,
+    difficulty,
+    spicyLevel,
+  } = recipe;
 
-    const spicyText = SpicyLevelFormat(spicy);
-    const difficultyText = DifficultyFormat(difficulty);
+    const displayProfile = writerProfile || defaultProfile;
+
+
+    const spicyText = SpicyLevelFormat(spicyLevel);
+
     return (
         <div className = "card card-custom card-wide"
-            onClick = {() => onClickDetail(recipeNo)}
+            onClick = {onClickDetail}
             style = {{ cursor: 'pointer'}}>
-                <img src = {thumbnail} className = "card-img-top" alt = {title} />
+                <img src = {thumbnailUrl} className = "card-img-top" alt = {title} />
 
 
             <div className="card-body px-0 py-2">
@@ -52,7 +47,7 @@ export const RecipeCard = ({
 
                     <div className="overflow-hidden w-100">
             <div className="d-flex overflow-hidden w-100">
-              <small className="fw-bold text-nowrap">{nickname}</small>
+              <small className="fw-bold text-nowrap">{writerNickname}</small>
               
               <p className="card-text text-truncate mb-0 ms-2">{title}</p>
             </div>
@@ -60,7 +55,9 @@ export const RecipeCard = ({
             <div className="small text-muted">
               <span className="text-warning">
                
-                <i className="bi bi-star-fill"></i> {Number(rating || 0).toFixed(1)}
+
+                <i className="bi bi-star-fill"></i> {averageRating.toFixed(1)}
+
               </span>
               <span> | 후기 {reviewCount}</span>
             </div>
@@ -72,10 +69,10 @@ export const RecipeCard = ({
             <i className="bi bi-person"></i> {servings}인분
           </span>
           <span className="text-secondary me-3">
-            <i className="bi bi-clock"></i> {makeTime}분
+            <i className="bi bi-clock"></i> {prepTime}분
           </span>
           <span className="text-secondary me-3">
-            <i className="bi bi-star"></i> {difficultyText}
+            <i className="bi bi-star"></i> {difficulty}
           </span>
           <span>
              

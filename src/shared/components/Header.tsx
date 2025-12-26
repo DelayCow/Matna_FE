@@ -9,8 +9,11 @@ export default function Header() {
   const isMain = mainPaths.includes(location.pathname);
 
   const getPageName = () => {
-    switch (location.pathname) {
-      case '/mypage': return '마이페이지';
+    const path = location.pathname;
+    switch (true) {
+      case path == '/mypage': return '마이페이지';
+      case path.startsWith('/review/recipe') : return '레시피 후기';
+      case path.startsWith('/review/detail') : return '후기 상세보기';
     }
   };
 

@@ -1,17 +1,29 @@
 import { useMyPage } from "@/features/mypage/hooks/useMyPage";
 
+import { MyPageProfileCard } from "@/features/mypage/components/MyPageProfile";
+
 import { ReviewCard, type ReviewCardProps } from "@/shared/components/ReviewCard";
 import { MyPageRecipeCard, type MyPageRecipe } from "@/features/mypage/components/MypageRecipeCard";
 import { MyPageGroupBuyCard, type GroupBuyItem } from "@/features/mypage/components/MyPageGroupBuyCard";
 
 import "@/features/mypage/styles/mypage.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function MyPage() {
+    const navigate = useNavigate();
     const {
-        member, recipes, reviews, groupBuys, isLoading,
+        member, isOwner, recipes, reviews, groupBuys, isLoading,
         activeMainTab, setActiveMainTab, contentSubTab, setContentSubTab,
         groupSubTab, setGroupSubTab, groupFilter, setGroupFilter, totalGroupCount
     } = useMyPage();
+
+    const [showMenu, setShowMenu] = useState(false);
+
+    const handleLogout = () => {
+        sessionStorage.removeItem("au");
+        window.location.href = "/login";
+    };
 
     const handleDeleteRecipe = (id: number) => { 
     if (window.confirm("정말 이 레시피를 삭제하시겠습니까?")) {
@@ -25,19 +37,14 @@ export default function MyPage() {
 
     return (
         <div className="mobile-container bg-light min-vh-100">
-            {/* 프로필 섹션 */}
-            <section className="profile-section px-3 py-3 bg-white">
-                <div className="d-flex align-items-center">
-                    <img src={member?.imageUrl || "/img/user.png"} className="rounded-circle border me-3" width="60" height="60" alt="profile" />
-                    <div>
-                        <h5 className="fw-bold mb-1">{member?.nickname}</h5>
-                        <small className="text-muted text-decoration-underline">
-                            {/* ✅ points가 null/undefined일 때 에러 방지 */}
-                            내 맛나머니 : {(member?.points ?? 0).toLocaleString()} 원
-                        </small>
-                    </div>
-                </div>
-            </section>
+            
+            {/* 1️⃣ 프로필 섹션 (헤더 없이 여기서부터 시작) */}
+            <MyPageProfileCard 
+                member={member} 
+                isOwner={isOwner} 
+                onReport={(no) => console.log("신고유저번호:", no)} 
+            />
+
 
             {/* 통계 탭 */}
             <section className="stats-tabs d-flex text-center border-top border-bottom bg-white">
