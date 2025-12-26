@@ -13,6 +13,7 @@ export default function Header() {
     switch (true) {
       case path == '/mypage': return '마이페이지';
       case path.startsWith('/review/recipe') : return '레시피 후기';
+      case path.startsWith('/review/detail') : return '후기 상세보기';
     }
   };
 
