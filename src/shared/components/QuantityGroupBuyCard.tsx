@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "../styles/groupBuyCard.css";
 
 interface QuantityGroupBuy{
@@ -19,7 +20,8 @@ interface QuantityGroupBuyProps {
     onClick?: (no: number) => void;
 }
 
-export default function QuantityGroupBuyCard({data, onClick}: QuantityGroupBuyProps){
+export default function QuantityGroupBuyCard({data}: QuantityGroupBuyProps){
+    const navigate = useNavigate();
     const creatorImageUrl = data.creatorImageUrl || '../src/assets/user.png';
     const formatAddress = (fullAddress: string): string =>{
         if(!fullAddress) return '주소 정보 없음';
@@ -35,14 +37,12 @@ export default function QuantityGroupBuyCard({data, onClick}: QuantityGroupBuyPr
     const address = formatAddress(data.shareLocation);
 
     const handleClick = () => {
-        if(onClick) {
-            onClick(data.quantityGroupBuyNo);
-        }
+        navigate(`/quantityGroupBuy/detail/${data.quantityGroupBuyNo}`);
     };
 
     return(
         <div className="card card-custom card-wide" datatype="quantityGroupBuy" data-no={data.quantityGroupBuyNo} 
-            onClick={handleClick} style={{cursor: onClick? 'pointer' : 'default'}}>
+            onClick={handleClick} style={{cursor: 'pointer'}}>
         <img src={data.groupBuyImageUrl} className="card-img-top" alt={data.title} />
         <div className="card-body px-0 py-2">
             <div className="d-flex align-items-center mb-1">
