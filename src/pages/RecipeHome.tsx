@@ -50,19 +50,9 @@ export default function RecipeHome() {
               className="col d-flex justify-content-center"
             >
               <RecipeCard
-                recipeNo={recipe.recipeNo}
-                thumbnail={recipe.thumbnailUrl}
-                title={recipe.title}
-                nickname={recipe.writerNickname}
-                profileImage={recipe.writerProfile}
-                rating={recipe.averageRating}
-                reviewCount={recipe.reviewCount}
-                servings={recipe.servings}
-                makeTime={recipe.prepTime}
-                difficulty={recipe.difficulty}
-                spicy={recipe.spicyLevel}
-                onClickDetail={(recipeNo) =>
-                  navigate(`/recipe/detail/${recipeNo}`)
+                recipe={recipe}
+                onClickDetail={() =>
+                  navigate(`/recipe/detail/${recipe.recipeNo}`)
                 }
               />
             </div>
