@@ -12,6 +12,7 @@ export default function Header() {
     const path = location.pathname;
     switch (true) {
       case path == '/mypage': return '마이페이지';
+      case path.startsWith('/recipe') : return '레시피 조회';
       case path.startsWith('/review/recipe') : return '레시피 후기';
     }
   };

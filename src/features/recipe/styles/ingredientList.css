@@ -1,0 +1,28 @@
+.ingredient-row {
+  border-bottom: 1px solid #f1f3f5;
+  padding: 8px 0;
+  font-size: 0.8rem;
+  align-items: center;
+}
+
+.ingredient-row:last-child {
+  border-bottom: none;
+}
+
+/* 공구 뱃지 */
+.badge-gonggu {
+  font-size: 0.7rem;
+  font-weight: normal;
+  padding: 3px 6px;
+  border-radius: 10px;
+}
+
+.badge-gonggu.active {
+  background-color: #e7f5ff;
+  color: #0099ff;
+}
+
+.badge-gonggu.inactive {
+  background-color: #e9ecef;
+  color: #868e96;
+}

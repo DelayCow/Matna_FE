@@ -1,0 +1,19 @@
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+}
+
+.progress-custom {
+  height: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.progress-bar-custom {
+  background-color: #3b82f6;
+  border-radius: 5px;
+}
