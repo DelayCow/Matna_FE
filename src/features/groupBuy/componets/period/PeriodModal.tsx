@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import PeriodPriceTable from './PeriodPriceTable';
 import {
     type PeriodGroupBuyDetail,
@@ -31,6 +31,19 @@ export default function PeriodModal({
 }: PeriodGroupBuyModalProps) {
     const [cancelReason, setCancelReason] = useState<string>('');
 
+    // 모달 열릴 때 body 스타일 관리
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     // 계산
@@ -41,30 +54,49 @@ export default function PeriodModal({
 
     // 액션 핸들러
     const handleAction = async () => {
-        let success = false;
+        // 모달 먼저 닫기
+        onClose();
 
-        if (userStatus === 'normal') {
-            success = await onJoin();
-        } else if (userStatus === 'participant') {
-            success = await onCancel();
-        } else if (userStatus === 'creator') {
-            success = await onStop(cancelReason);
-        }
+        // 약간의 딜레이 후 액션 실행 (모달이 완전히 닫힌 후)
+        setTimeout(async () => {
+            if (userStatus === 'normal') {
+                await onJoin();
+            } else if (userStatus === 'participant') {
+                await onCancel();
+            } else if (userStatus === 'creator') {
+                await onStop(cancelReason);
+            }
+            // 성공/실패 처리는 각 핸들러 내부에서 모달로 처리됨
+        }, 200);
+    };
 
-        if (success) {
-            onClose();
-        }
+    // 모달 닫을 때 입력값 초기화
+    const handleClose = () => {
+        setCancelReason('');
+        onClose();
     };
 
     return (
         <>
-            <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} onClick={onClose}>
-                <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '500px' }} onClick={(e) => e.stopPropagation()}>
+            <div 
+                className="modal fade show" 
+                style={{ display: 'block' }} 
+                onClick={handleClose}
+                tabIndex={-1}
+            >
+                <div 
+                    className="modal-dialog modal-dialog-centered" 
+                    style={{ maxWidth: '500px' }} 
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <div className="modal-content">
                         <div className="modal-body p-4 text-center">
-                            <button type="button" className="btn-close position-absolute top-0 end-0 m-3" 
-                                onClick={onClose} aria-label="Close" />
-
+                            <button 
+                                type="button" 
+                                className="btn-close position-absolute top-0 end-0 m-3" 
+                                onClick={handleClose} 
+                                aria-label="Close" 
+                            />
 
                             {userStatus === 'normal' && (
                                 <>
@@ -159,6 +191,7 @@ export default function PeriodModal({
                     </div>
                 </div>
             </div>
+            <div className="modal-backdrop fade show"></div>
         </>
     );
 }
