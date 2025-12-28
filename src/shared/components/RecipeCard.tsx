@@ -1,8 +1,11 @@
 import "@/shared/styles/card.css"
+
 import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
+
 import defaultProfile from "@/assets/user.png";
 
 import type { Recipe } from "../services/data/RecipeHomeData";
+import { getDifficultyText } from "../services/data/DifficultyText";
 
 
 interface RecipeCardProps {
@@ -35,6 +38,7 @@ export const RecipeCard = ({
 
 
     const spicyText = SpicyLevelFormat(spicyLevel);
+    const DifficultyText = getDifficultyText(difficulty);
 
     return (
         <div className = "card card-custom card-wide"
@@ -74,7 +78,7 @@ export const RecipeCard = ({
             <i className="bi bi-clock"></i> {prepTime}분
           </span>
           <span className="text-secondary me-3">
-            <i className="bi bi-star"></i> {difficulty}
+            <i className="bi bi-star"></i> {DifficultyText}
           </span>
           <span>
              
