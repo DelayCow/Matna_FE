@@ -1,11 +1,10 @@
 
 export const getStatusStep = (status: string): number => {
-  const s = status.toUpperCase();
-  switch (s) {
-    case 'OPEN': case 'RECRUITING': return 1;
-    case 'CLOSED': case 'PAYMENT_WAIT': return 2;
-    case 'PAID': case 'DELIVERED': return 3;
-    case 'SHARED': case 'COMPLETED': return 4;
+  switch (status) {
+    case 'open': case 'recruiting': return 1;
+    case 'closed': case 'payment_wait': return 2;
+    case 'paid': return 3;
+    case 'delivered': case 'shared': case 'completed': return 4;
     default: return 1;
   }
 };

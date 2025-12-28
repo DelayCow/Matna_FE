@@ -17,7 +17,9 @@ export const useHome = () => {
         setIsLoading(true);
         try {
             const data = await fetchHomeData();
-            setRecipes(data.recipes);
+            console.log("전체 데이터 모양 확인:", data);
+            // setRecipes(data.recipes.content);
+            setRecipes(data.recipes?.content || data.recipes || []);
             setQuantityBuys(data.quantityBuys);
             setPeriodBuys(data.periodBuys);
             setReviews(data.reviews);

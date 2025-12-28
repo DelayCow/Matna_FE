@@ -26,11 +26,66 @@ export const useMyPage = () => {
   const [totalGroupCount, setTotalGroupCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   
+const handleGroupAction = async (action: string, item: GroupBuyItem) => {
+    try {
+      switch (action) {
+        case 'CANCEL': {
+          if (!window.confirm("정말 참여를 취소하시겠습니까?")) return;
+          const type = item.periodGroupBuyNo ? "PERIOD" : "QUANTITY";
+          // TODO: MyPageApi에 cancelParticipation 메서드 추가 필요
+          await MyPageApi.cancelParticipation(item.groupParticipantNo, type);
+          alert("참여가 취소되었습니다.");
+          window.location.reload(); // 심플하게 새로고침
+          break;
+        }
 
-  // const handleEditInfo = () => {
-  //       showPasswordCheckModal 
+        case 'REG_PAYMENT':
+          // TODO: 결제 정보 등록 모달 열기 (item 정보 전달)
+          console.log("결제 정보 등록 모달 열기:", item);
+          // showPaymentRegisterModal(item);
+          break;
+
+        case 'REG_ARRIVAL':
+            // TODO: 도착 정보 등록 모달 열기
+            console.log("도착 정보 등록 모달 열기:", item);
+            break;
+
+        case 'VIEW_PAYMENT':
+          // TODO: 결제 정보 확인 모달 열기
+          console.log("결제 정보 확인 모달 열기:", item);
+          // showPaymentInfoModal(item);
+          break;
+
+        case 'VIEW_ARRIVAL':
+          // TODO: 도착 정보 확인 모달 열기
+          console.log("도착 정보 확인 모달 열기:", item);
+          // showArrivalInfoModal(item);
+          break;
+
+        case 'CONFIRM_SHARE': {
+          // TODO: 나눔 수령 확정 모달 열기 -> 확인 시 API 호출
+          if (!window.confirm("물품을 수령하셨습니까?")) return;
+          await MyPageApi.confirmShare(item.groupParticipantNo); // API 호출
+          alert("수령 확정이 완료되었습니다.");
+          window.location.reload();
+          break;
+        }
         
-  //   };
+        case 'GO_DETAIL':
+            const detailUrl = item.periodGroupBuyNo 
+                ? `/periodGroupBuy/detail/${item.periodGroupBuyNo}` 
+                : `/quantityGroupBuy/detail/${item.quantityGroupBuyNo}`;
+            window.location.href = detailUrl;
+            break;
+
+        default:
+          console.warn("알 수 없는 액션:", action);
+      }
+    } catch (error) {
+      console.error(`${action} 처리 중 오류 발생:`, error);
+      alert("요청 처리 중 문제가 발생했습니다.");
+    }
+  };
 
   const handleReport = async (targetNo: number) => {
         // 본인을 신고하는 경우 방어 로직 (이미 UI에서 막았지만 이중 체크)
@@ -165,7 +220,8 @@ export const useMyPage = () => {
     groupSubTab, setGroupSubTab,
     groupFilter, setGroupFilter,
     isOwner, handleDeleteRecipe,
-    handleLogout, handleReport
+    handleLogout, handleReport,
+    handleGroupAction
     // handleEditInfo
   };
 };

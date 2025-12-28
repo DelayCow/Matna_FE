@@ -1,11 +1,11 @@
 export interface Recipe {
   recipeNo: number;
-  title: string;
   thumbnailUrl: string;
+  title: string;
   writerNickname: string;
   writerProfile?: string;
+   averageRating: number;
   reviewCount: number;
-  averageRating: number;
   servings: number;
   prepTime: number;
   difficulty: string;

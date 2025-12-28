@@ -13,20 +13,8 @@ export const fetchHomeData = async () => {
         AxiosInterceptor.get('/api/periodGroupBuy/home'),
     ]);
 
-    const mappedRecipes = recipeRes.data.content.map((r: any) => ({
-        recipeNo: r.recipeNo,
-        thumbnail: r.thumbnailUrl,      
-        title: r.title,
-        nickname: r.writerNickname,   
-        rating: r.averageRating,       
-        reviewCount: r.reviewCount,
-        servings: r.servings,
-        makeTime: r.prepTime,          
-        difficulty: r.difficulty,
-        spicy: r.spicyLevel           
-    }));
     return {
-        recipes: mappedRecipes || [],
+        recipes: recipeRes.data.content || [],
         quantityBuys: qtyRes.data || [],
         periodBuys: prdRes.data || [],
         reviews: reviewRes.data || []

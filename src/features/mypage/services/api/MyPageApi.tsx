@@ -1,5 +1,4 @@
 import AxiosInterceptor from "@/shared/services/AxiosInterceptor";
-import { useNavigate } from "react-router-dom";
 
 
 const MyPageApi = {
@@ -40,12 +39,31 @@ const MyPageApi = {
    
     const response = await AxiosInterceptor.delete(`/api/mypage/${recipeNo}/recipe`);
     return response.data;
-  }
-  // editRecipe: async (recipeNo: number) => {
+  },
+ 
+  cancelParticipation: async (participantNo: number, type: "PERIOD" | "QUANTITY") => {
+    // 타입에 따라 URL 분기 처리
+    const url = type === "PERIOD" 
+      ? `/api/periodGroupBuy/cancelParticipant/${participantNo}`
+      : `/api/quantityGroupBuy/cancelParticipant/${participantNo}`;
     
-  //   window.location.
-  //   window.location.useNavigate = `/api/recipe/edit/${recipeNo}`;
-  // }
+    // PUT 메서드로 요청
+    const response = await AxiosInterceptor.put(url);
+    return response.data;
+  },
+
+  // 8. 나눔 수령 확정
+  confirmShare: async (participantNo: number) => {
+    // 오늘 날짜를 "YYYY-MM-DD" 형태로 생성
+    const today = new Date().toISOString().split('T')[0];
+    
+    const response = await AxiosInterceptor.post('/api/mypage/groupbuy/shared', {
+      groupParticipantNo: participantNo,
+      receiveDate: `${today}T00:00:00` // DB 형식에 맞춰 시간 추가
+    });
+    return response.data;
+  }
+
 };
 
 
