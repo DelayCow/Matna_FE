@@ -1,7 +1,7 @@
 import { getDifficultyText } from "@/shared/services/data/DifficultyText";
 import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
 import type { RecipeDetail } from "../services/data/RecipeData";
-
+import spicyicon from "@/assets/spicy.png"
 import "@/features/recipe/styles/recipeHeader.css";
 import { useNavigate } from "react-router-dom";
 
@@ -92,7 +92,7 @@ export default function RecipeHeader({
           <div className="flex-fill border-end"><i className="bi bi-person fs-5 d-block mb-1"></i> <span>{recipe.servings}</span>인분</div>
           <div className="flex-fill border-end"><i className="bi bi-clock fs-5 d-block mb-1"></i> <span>{recipe.prepTime}</span>분이내</div>
           <div className="flex-fill border-end"><i className="bi bi-star fs-5 d-block mb-1"></i> <span>{getDifficultyText(recipe.difficulty)}</span></div>
-          <div className="flex-fill"><img src="../assets/spicy.png" className="mx-auto d-block mt-1 mb-2"/><span>{SpicyLevelFormat(recipe.spicyLevel)}</span></div>
+          <div className="flex-fill"><img src={spicyicon} className="mx-auto d-block mt-1 mb-2"/><span>{SpicyLevelFormat(recipe.spicyLevel)}</span></div>
         </div>
       </section>
     </main>
