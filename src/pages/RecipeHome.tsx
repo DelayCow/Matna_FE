@@ -65,8 +65,10 @@ export default function RecipeHome() {
 
         {/* 로딩 표시 */}
         {loading && (
-          <div className="text-center py-3 text-muted">
-            로딩 중...
+          <div className="col-12 text-center py-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
           </div>
         )}
       </div>
