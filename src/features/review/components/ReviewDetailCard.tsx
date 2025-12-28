@@ -4,7 +4,7 @@ import spicyIcon from "../../../assets/spicy.png";
 import user from "../../../assets/user.png";
 import "../styles/reviewDetailCard.css";
 import { DateFormat } from "../../../shared/utils/DateFormat";
-import { SpicyLevelFormat } from "@/shared/utils/SpicyLevelFormat";
+import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
 import type { Review } from "../services/data/ReviewData";
 
 interface ReviewCardProps {
