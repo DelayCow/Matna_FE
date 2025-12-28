@@ -2,7 +2,7 @@ import PeriodGroupBuyCard from "../shared/components/PeriodGroupBuyCard";
 import QuantityGroupBuyCard from "../shared/components/QuantityGroupBuyCard";
 import SearchBar from "../shared/components/SearchBar";
 import SortDropdown, { type SortOption } from "../shared/components/SortDropDown";
-import { useGroupBuyHome } from "../shared/hooks/useGroupBuyHome";
+import { useGroupBuyHome } from "../features/groupBuy/hooks/useGroupBuyHome";
 import "../features/groupBuy/styles/groupBuyHome.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js" //추후 삭제 예정
 

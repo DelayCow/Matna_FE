@@ -1,0 +1,54 @@
+.top-product-image-full {
+    width: 100%;
+    padding-top: 50%;
+    overflow: hidden;
+    position: relative;
+}
+.top-product-image-full img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.product-title {
+    font-size: 1.5rem;
+}
+.product-price {
+    font-size: 1.5rem;
+}
+.product-price .fee-text {
+    font-size: 0.7rem;
+}
+
+.group-buy-table th, .group-buy-table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.btn-group-buy-status {
+    width: 150px;
+    flex-shrink: 0;
+    line-height: 1.1;
+    font-size: 0.85rem;
+    height: 48px;
+}
+
+.recipe-cards-scroll {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    align-items: stretch;
+}
+.recipe-cards-scroll::-webkit-scrollbar {
+    display: none;
+}
+.recipe-cards-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

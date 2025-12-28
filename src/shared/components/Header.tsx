@@ -14,6 +14,8 @@ export default function Header() {
       case path == '/mypage': return '마이페이지';
       case path.startsWith('/recipe') : return '레시피 조회';
       case path.startsWith('/review/recipe') : return '레시피 후기';
+      case path.startsWith('/periodGroupBuy/detail') : return '공동구매';
+      case path.startsWith('/review/detail') : return '후기 상세보기';
     }
   };
 

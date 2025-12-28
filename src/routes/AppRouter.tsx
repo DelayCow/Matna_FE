@@ -7,6 +7,9 @@ import RecipeHome from "../pages/RecipeHome";
 import GroupBuyHome from "../pages/GroupBuyHome";
 import MyPage from "../pages/MyPage";
 import RecipeDetail from "../pages/RecipeDetail";
+import PeriodGroupBuyDetail from "@/pages/PeriodGroupBuyDetail";
+import ReviewList from "../pages/ReviewList";
+import ReviewDetail from "../pages/ReviewDetail";
 
 const MemberRoute = function(){
     const token = sessionStorage.getItem('au');
@@ -25,9 +28,13 @@ export default function AppRouter(){
                             <Route path="/groupBuy" element={<GroupBuyHome />}/>
                             <Route path="/mypage/:memberNo" element={<MyPage />}/>
                             <Route path="/recipe/detail/:recipeNo" element={<RecipeDetail />}/>
+                            <Route path="/periodGroupBuy/detail/:periodGroupBuyNo" element={<PeriodGroupBuyDetail />} />
+                            <Route path="/mypage" element={<MyPage />}/>
+                            <Route path="/review/recipe/:recipeNo" element={<ReviewList />}/>
+                            <Route path="/review/detail/:reviewNo" element={<ReviewDetail />}/>
                         </Route>
                     </Route>
-                    
+
                     <Route path="/login" element={<Login />} /> 
                 </Route>
             </Routes>
