@@ -47,9 +47,8 @@ AxiosInterceptor.interceptors.response.use(
             pendingRequests.delete(requestKey);
         }
 
-        // 취소된 요청(AbortError)은 에러 로그를 남기지 않고 종료
         if (axios.isCancel(error)) {
-            return new Promise(() => {}); // 펜딩 상태로 두어 후속 로직 실행 방지
+            return new Promise(() => {});
         }
 
         if (error.response?.status === 401) {
