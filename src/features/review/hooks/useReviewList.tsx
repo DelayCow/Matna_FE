@@ -7,20 +7,14 @@ export const useReviewList = (recipeNo:string) => {
     
     useEffect(()=>{
         if(recipeNo === "") return;
-        let isMounted = true;
         const loadReviewList = async () => {
         try {
             const result = await ReviewApi(recipeNo);
-            if (isMounted) {
-                setReviews(result);
-            }
+            setReviews(result);
         } catch(e){
             console.error("리뷰 로드 실패", e)
         }};
         loadReviewList();
-        return()=>{
-            isMounted = false;
-        }
     },[recipeNo])
 
     return reviews;
