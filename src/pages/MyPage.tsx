@@ -18,7 +18,7 @@ export default function MyPage() {
         handleDeleteRecipe,
         handleLogout,
         handleReport, handleGroupAction,
-        handleReviewClick
+        handleReviewClick, handleWithdraw
     } = useMyPage();
 
 
@@ -38,6 +38,7 @@ export default function MyPage() {
                 isOwner={isOwner}
                 onReport={handleReport}
                 onLogout={handleLogout}
+                onWithdraw={handleWithdraw}
                 onEditInfo={() => console.log("모달 띄우기")}
             />
 
@@ -71,7 +72,7 @@ export default function MyPage() {
                                         key={r.id}
                                         item={r}
                                         isOwner={isOwner}
-                                        // onDelete 역시 r.id를 넘겨줘야 함
+                                        
                                         onDelete={() => handleDeleteRecipe(r.id)}
                                     />
                                 )) :
@@ -79,7 +80,7 @@ export default function MyPage() {
                                     <ReviewCard
                                         key={rv.reviewNo}
                                         {...rv}
-                                        // 🛠️ onClickDetail에 handleReviewClick을 연결합니다.
+                                        
                                         onClickDetail={() => handleReviewClick(rv.reviewNo)}
                                     />
                                 ))
@@ -110,7 +111,7 @@ export default function MyPage() {
                                     <MyPageGroupBuyCard
                                         key={item.groupBuyNo}
                                         item={item}
-                                        // step={item.step}
+                                        
                                         isHost={groupSubTab === 'host'}
                                         onAction={(handleGroupAction)}
                                     />

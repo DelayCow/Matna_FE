@@ -54,12 +54,12 @@ const MyPageApi = {
 
   // 8. 나눔 수령 확정
   confirmShare: async (participantNo: number) => {
-    // 오늘 날짜를 "YYYY-MM-DD" 형태로 생성
+  
     const today = new Date().toISOString().split('T')[0];
     
     const response = await AxiosInterceptor.post('/api/mypage/groupbuy/shared', {
       groupParticipantNo: participantNo,
-      receiveDate: `${today}T00:00:00` // DB 형식에 맞춰 시간 추가
+      receiveDate: `${today}T00:00:00` 
     });
     return response.data;
   },
