@@ -1,0 +1,14 @@
+.step-number {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #343a40;
+  min-width: 25px;
+}
+
+.step-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}

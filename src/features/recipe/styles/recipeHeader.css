@@ -1,0 +1,47 @@
+/* 프로필 영역 */
+#writer-profile {
+  cursor: pointer;
+}
+
+.profile-img-lg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* 수정/삭제 메뉴 */
+#edit-box {
+  cursor: pointer;
+  position: relative;
+}
+
+.edit-box {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 60px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  z-index: 1000;
+  font-size: 0.75rem;
+  color: #495057;
+}
+
+.edit-box.show {
+  display: block;
+}
+
+.edit-box a {
+  display: block;
+  padding: 3px 0;
+  text-decoration: none;
+  color: #343a40;
+}
+
+.edit-box a:hover {
+  color: red;
+}
