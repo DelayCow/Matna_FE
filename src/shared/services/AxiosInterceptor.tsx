@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const AxiosInterceptor = axios.create({
-    baseURL: 'http://127.0.0.1:5432',
+    baseURL: 'http://127.0.0.1:5432', 
     headers: {
+
         'Content-Type': 'application/json',
     },
 });

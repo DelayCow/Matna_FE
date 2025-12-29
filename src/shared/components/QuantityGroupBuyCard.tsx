@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/groupBuyCard.css";
 
-interface QuantityGroupBuy{
+export interface QuantityGroupBuy{
     quantityGroupBuyNo: number;
     groupBuyImageUrl: string;
     title: string;

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import DueDateCountDown from "./DueDateCountDown";
 import "../styles/groupBuyCard.css";
 
-interface PeriodGroupBuy {
+export interface PeriodGroupBuy {
     periodGroupBuyNo: number;
     groupBuyImageUrl: string;
     title: string;

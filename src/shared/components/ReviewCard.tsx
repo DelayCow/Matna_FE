@@ -1,8 +1,8 @@
 import "@/shared/styles/card.css"
-import { DateFormat } from "../utils/DateFormat";
+import { DateFormat } from "@/shared/services/data/DateFormat";
 import defaultProfile from "@/assets/user.png";
 
-interface ReviewCardProps {
+export interface ReviewCardProps {
     reviewNo: number,
     reviewImage: string,
     writerProfileImage?: string,
@@ -37,6 +37,7 @@ export const ReviewCard = ({
       
       <div className="card-body px-0 py-2">
         <div className="d-flex align-items-center mb-1">
+          
           <img src={displayProfile} className="profile-img" alt="User" />
           
           <div className="overflow-hidden w-100">
