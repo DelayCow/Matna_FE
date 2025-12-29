@@ -41,22 +41,12 @@ interface MyPageGroupBuyCardProps {
 }
 
 
-export const getStatusStep = (status: string = ""): number => {
-  
-  switch (status) {
-    case 'open': return 1;
-    case 'closed': case 'payment_wait': return 2;
-    case 'paid': return 3;
-    case 'delivered': case 'shared': case 'completed': return 4;
-    default: return 1;
-  }
-};
+
 
 export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCardProps) => {
   const steps = ["모집", "상품결제", "상품도착", "나눔진행"];
 
-  const status = (item.status || "");
-  const currentStep = getStatusStep(status);
+  const currentStep = item.step || "";
 
   
   const renderActionBtn = () => {
@@ -76,7 +66,7 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
       onAction(action, item);
     };
 
-  
+ 
     if (isHost) {
       return (
         <div className={containerClass} style={containerStyle}>
@@ -186,9 +176,7 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
       {/* 2. 카드 본문 (이미지 + 정보 + 버튼) */}
       <div className="d-flex align-items-center justify-content-between position-relative">
 
-        {/* 🟢 [왼쪽] 상세페이지 이동 영역 
-            - zIndex: 1로 설정하여 버튼(zIndex: 50)보다 아래에 위치하도록 강제함
-        */}
+       
         <div
           className="d-flex align-items-center gap-3 flex-grow-1"
           style={{ cursor: 'pointer', position: 'relative', zIndex: 1 }}
@@ -212,7 +200,7 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
           </div>
         </div>
 
-        {/* 🟢 [오른쪽] 액션 버튼들 (z-index: 50) */}
+
         {renderActionBtn()}
       </div>
     </div>

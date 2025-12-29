@@ -62,9 +62,9 @@ const navigate = useNavigate();
     
   };
 
-  const handleWithdraw = () => {
-    //탈퇴 임
-  };
+  // const handleWithdraw = () => {
+  //   //탈퇴 임
+  // };
 
 
 
@@ -98,9 +98,11 @@ const navigate = useNavigate();
         setRecipes(recipeData || []);
         setReviews(reviewData || []);
 
+        const validHostData = (hostData || []).filter(item => item.status !== 'canceled');
+        const validPartData = (partData || []).filter(item => item.status !== 'canceled');
        
-        const formattedHost = formatGroupBuyData(hostData);
-        const formattedPart = formatGroupBuyData(partData);
+        const formattedHost = formatGroupBuyData(validHostData);
+        const formattedPart = formatGroupBuyData(validPartData);
 
         setTotalGroupCount(formattedHost.length + formattedPart.length);
         setGroupBuys(formattedHost); 

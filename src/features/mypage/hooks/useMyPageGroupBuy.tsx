@@ -19,10 +19,12 @@ export const useMyPageGroupBuy = (
     const calculateStep = (status: string): number => {
         
         switch (status) {
-            case "OPEN": return 1;
-            case "CLOSED": return 2;
-            case "PAID": case "SHARED": return 3;
-            case "DELIVERED": return 4;
+        case 'open':  return 1;
+            case 'closed': return 2;
+            case 'paid': return 3;
+            case 'delivered': return 4;
+            case 'shared': return 5;
+            case 'canceled': return 0;
             default: return 1;
         }
     };
@@ -43,7 +45,8 @@ export const useMyPageGroupBuy = (
             try {
                 const typePath = groupSubTab === "host" ? "host" : "participation";
                 const data = await MyPageApi.fetchGroupBuys(memberNo, typePath, groupFilter);
-                setGroupBuys(formatGroupBuyData(data));
+               const validData = (data || []).filter(item => item.status !== 'canceled');
+                setGroupBuys(formatGroupBuyData(validData));
             } catch (error) {
                 // 모달 대체
                 setGroupBuys([]);
@@ -52,7 +55,7 @@ export const useMyPageGroupBuy = (
         loadGroupBuys();
     }, [groupSubTab, groupFilter, memberNo, activeMainTab]);
 
-    // 4. 복잡한 액션 핸들러 (취소, 결제, 상세 이동 등)
+    
     const handleGroupAction = async (action: string, item: GroupBuyItem) => {
         try {
             switch (action) {
@@ -64,16 +67,16 @@ export const useMyPageGroupBuy = (
                     break;
                 }
                 case 'REG_PAYMENT':
-                    console.log("결제 정보 등록:", item);
+                    // 결제 정보 등록
                     break;
                 case 'REG_ARRIVAL':
-                    console.log("도착 정보 등록:", item);
+                    // 도착 정보 등록
                     break;
                 case 'VIEW_PAYMENT':
-                    console.log("결제 정보 확인:", item);
+                    //결제 정보 확인
                     break;
                 case 'VIEW_ARRIVAL':
-                    console.log("도착 정보 확인:", item);
+                    //도착 정보 확인
                     break;
                 case 'CONFIRM_SHARE': {
                     

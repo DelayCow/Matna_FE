@@ -1,15 +1,4 @@
 
-export const getStatusStep = (status: string): number => {
-  switch (status) {
-    case 'open':  return 1;
-            case 'closed': return 2;
-            case 'paid': return 3;
-            case 'delivered': return 4;
-            case 'shared': return 5;
-            case 'canceled': return 0;
-            default: return 1;
-  }
-};
 
 export const getButtonConfig = (status: string, isHost: boolean) => {
   

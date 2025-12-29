@@ -38,7 +38,7 @@ export default function MyPage() {
                 isOwner={isOwner}
                 onReport={handleReport}
                 onLogout={handleLogout}
-                onWithdraw={handleWithdraw}
+                // onWithdraw={handleWithdraw}
                 onEditInfo={() => console.log("모달 띄우기")}
             />
 
@@ -99,8 +99,8 @@ export default function MyPage() {
                                 <option value="OPEN">모집중</option>
                                 <option value="CLOSED">모집마감</option>
                                 <option value="PAID">결제완료</option>
-                                <option value="SHARED">나눔중</option>
                                 <option value="DELIVERED">도착완료</option>
+                                <option value="SHARED">나눔완료</option>
                             </select>
                         </div>
 
