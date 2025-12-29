@@ -7,12 +7,27 @@ import PeriodDetailInfo from "@/features/groupBuy/componets/period/PeriodDetailI
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import PeriodModal from "@/features/groupBuy/componets/period/PeriodModal";
-import  "@/features/groupBuy/styles/PeriodDetail.css"
+import "@/features/groupBuy/styles/PeriodDetail.css";
+import { useModal } from "@/shared/hooks/useModal";
+import { AlertModal, ValidationModal, ConfirmModal } from "@/shared/components/Modal";
 
+export default function PeriodGroupBuyDetail() {
+    const { periodGroupBuyNo } = useParams<{ periodGroupBuyNo: string }>();
+    const groupBuyNo = periodGroupBuyNo ? parseInt(periodGroupBuyNo) : 0;
 
-export default function PeriodGroupBuyDetail(){
-    const {periodGroupBuyNo} = useParams<{periodGroupBuyNo: string}>();
-    const groupBuyNo = periodGroupBuyNo? parseInt(periodGroupBuyNo): 0;
+    // 모달 훅
+    const {
+        alertModal,
+        closeAlert,
+        validationModal,
+        closeValidation,
+        confirmModal,
+        closeConfirm,
+        showAlert,
+        showConfirm
+    } = useModal();
+
+    // 페이지 데이터 훅
     const {
         groupBuyDetail,
         participants,
@@ -24,12 +39,12 @@ export default function PeriodGroupBuyDetail(){
         handleJoin,
         handleCancel,
         handleStop
-    } = usePeriodGroupBuyDetail(groupBuyNo);
+    } = usePeriodGroupBuyDetail(groupBuyNo, { showAlert, showConfirm });
 
     // 모달 상태
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-        // 로딩 중
+    // 로딩 중
     if (isLoading) {
         return (
             <div className="mobile-container">
@@ -65,7 +80,6 @@ export default function PeriodGroupBuyDetail(){
         return `상품 수령 후 수령일포함 ${groupBuyDetail.shareEndDate || '?'}일 뒤 ${groupBuyDetail.shareTime || ''}`;
     };
 
-
     return (
         <div className="mobile-container position-relative">
             <div className="container-fluid content-area p-0">
@@ -89,13 +103,10 @@ export default function PeriodGroupBuyDetail(){
                         dueDate={groupBuyDetail.dueDate}
                         quantity={groupBuyDetail.quantity}
                         unit={groupBuyDetail.unit}
-
                         userStatus={userStatus}
                         isActionLoading={isActionLoading}
                         onButtonClick={() => setIsModalOpen(true)}
                     />
-
-                
 
                     {/* 상세 내용 */}
                     <p className="text-center bg-light p-2 rounded small text-muted mt-3">
@@ -121,7 +132,7 @@ export default function PeriodGroupBuyDetail(){
                 />
             </div>
 
-            {/* 모달 */}
+            {/* Period 모달 */}
             {isModalOpen && (
                 <PeriodModal
                     isOpen={isModalOpen}
@@ -135,6 +146,34 @@ export default function PeriodGroupBuyDetail(){
                     onStop={handleStop}
                 />
             )}
+
+            {/* Alert 모달 */}
+            <AlertModal
+                isOpen={alertModal.isOpen}
+                title={alertModal.title}
+                message={alertModal.message}
+                type={alertModal.type}
+                onClose={closeAlert}
+                onConfirm={alertModal.onConfirm}
+            />
+
+            {/* Validation 모달 */}
+            <ValidationModal
+                isOpen={validationModal.isOpen}
+                errors={validationModal.errors}
+                onClose={closeValidation}
+            />
+
+            {/* Confirm 모달 */}
+            <ConfirmModal
+                isOpen={confirmModal.isOpen}
+                title={confirmModal.title}
+                message={confirmModal.message}
+                confirmText={confirmModal.confirmText}
+                cancelText={confirmModal.cancelText}
+                onConfirm={confirmModal.onConfirm}
+                onCancel={closeConfirm}
+            />
         </div>
     );
 }
