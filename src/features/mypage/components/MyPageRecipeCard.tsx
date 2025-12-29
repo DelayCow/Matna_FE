@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
-import { DifficultyFormat } from "@/shared/services/data/DifficultyFormat";
+// import { DifficultyFormat } from "@/shared/services/data/DifficultyFormat";
+import {getDifficultyText} from "@/shared/services/data/DifficultyText";
 
 
 export interface MyPageRecipe {
@@ -26,7 +27,7 @@ interface MyPageRecipeCardProps {
 export const MyPageRecipeCard = ({ item, isOwner, onDelete }: MyPageRecipeCardProps) => {
     const navigate = useNavigate();
 
-    // 이미지 경로 (thumbnailUrl -> image로 변경)
+    //기본 음식 이미지는 로컬 데이터쓰나
     const imgUrl = item.image || '/img/default_food.jpg';
 
     return (
@@ -91,7 +92,7 @@ export const MyPageRecipeCard = ({ item, isOwner, onDelete }: MyPageRecipeCardPr
                     </span>
                     {/* 난이도 */}
                     <span className="bg-light px-2 py-1 rounded-pill border">
-                        <i className="bi bi-bar-chart me-1"></i>{DifficultyFormat(item.difficulty)}
+                        <i className="bi bi-bar-chart me-1"></i>{getDifficultyText(item.difficulty)}
                     </span>
                     {/* spicyLevel -> spicy */}
                     {item.spicy !== undefined && (

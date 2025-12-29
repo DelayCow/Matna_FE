@@ -15,10 +15,10 @@ export const useMyPageGroupBuy = (
     const [groupSubTab, setGroupSubTab] = useState<"host" | "participate">("host");
     const [groupFilter, setGroupFilter] = useState("ALL");
 
-    // 2. 내부 헬퍼 함수 (단계 계산 및 데이터 포맷팅)
+    
     const calculateStep = (status: string): number => {
-        const s = status?.trim().toUpperCase();
-        switch (s) {
+        
+        switch (status) {
             case "OPEN": return 1;
             case "CLOSED": return 2;
             case "PAID": case "SHARED": return 3;
@@ -45,7 +45,7 @@ export const useMyPageGroupBuy = (
                 const data = await MyPageApi.fetchGroupBuys(memberNo, typePath, groupFilter);
                 setGroupBuys(formatGroupBuyData(data));
             } catch (error) {
-                console.error("공동구매 데이터 로드 실패:", error);
+                // 모달 대체
                 setGroupBuys([]);
             }
         };
@@ -91,7 +91,9 @@ export const useMyPageGroupBuy = (
                     console.warn("알 수 없는 액션:", action);
             }
         } catch (error) {
-            console.error(`${action} 처리 중 오류 발생:`, error);
+            
+
+        // 추후 모달 대체
         }
     };
 

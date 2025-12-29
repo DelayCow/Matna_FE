@@ -1,7 +1,7 @@
 import "@/features/mypage/styles/mypage.css";
 import React from "react";
 
-// ✅ 인터페이스 정의
+
 export interface MyPageGroupBuy {
   periodGroupBuyNo: number;
   quantityGroupBuyNo: number;
@@ -40,11 +40,11 @@ interface MyPageGroupBuyCardProps {
   onAction: (action: string, item: GroupBuyItem) => void;
 }
 
-// ✅ 상태 단계를 숫자로 변환 (대소문자 변환 제거: DB값 그대로 사용)
+
 export const getStatusStep = (status: string = ""): number => {
-  const s = status.trim(); // 🟢 소문자 변환 제거
-  switch (s) {
-    case 'open': case 'recruiting': return 1;
+  
+  switch (status) {
+    case 'open': return 1;
     case 'closed': case 'payment_wait': return 2;
     case 'paid': return 3;
     case 'delivered': case 'shared': case 'completed': return 4;
@@ -55,29 +55,28 @@ export const getStatusStep = (status: string = ""): number => {
 export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCardProps) => {
   const steps = ["모집", "상품결제", "상품도착", "나눔진행"];
 
-  // 🟢 대소문자 변환 제거: DB 데이터 그대로 사용 (trim만 적용)
-  const status = (item.status || "").trim();
+  const status = (item.status || "");
   const currentStep = getStatusStep(status);
 
-  // ✅ 버튼 렌더링 로직 (클릭 방어 + 수직 배치)
+  
   const renderActionBtn = () => {
-    // 1. 컨테이너 스타일: 수직 배치 + z-index로 최상단 확보
+   
     const containerClass = "d-flex flex-column gap-1 ms-3";
     const containerStyle: React.CSSProperties = {
       minWidth: '120px',
       position: 'relative',
-      zIndex: 50,           // 🟢 값을 50으로 높여서 확실하게 위로 올림
-      flexShrink: 0         // 화면이 좁아져도 찌그러지지 않음
+      zIndex: 50,          
+      flexShrink: 0        
     };
 
     // 2. 클릭 이벤트가 다른 곳(상세이동)으로 새지 않도록 막는 함수
     const handleBtnClick = (e: React.MouseEvent, action: string) => {
-      e.preventDefault();  // 🟢 기본 동작 방지 추가
-      e.stopPropagation(); // 🟢 부모 요소(상세페이지 이동)로 전파 차단
+      e.preventDefault();  
+      e.stopPropagation(); 
       onAction(action, item);
     };
 
-    // [Host: 방장]
+  
     if (isHost) {
       return (
         <div className={containerClass} style={containerStyle}>
@@ -102,7 +101,7 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
 
     // [Participant: 참여자]
     else {
-      if (status === 'open' || status === 'recruiting') {
+      if (status === 'open') {
         return (
           <div className={containerClass} style={containerStyle}>
             <button
@@ -119,7 +118,7 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
         <div className={containerClass} style={containerStyle}>
           <button
             className="btn btn-outline-primary btn-sm"
-            disabled={!['paid', 'delivered', 'shared', 'completed'].includes(status)}
+            disabled={!['paid', 'delivered', 'shared'].includes(status)}
             onClick={(e) => handleBtnClick(e, 'VIEW_PAYMENT')}
           >
             결제정보 확인
@@ -127,7 +126,7 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
 
           <button
             className="btn btn-outline-success btn-sm"
-            disabled={!['delivered', 'shared', 'completed'].includes(status)}
+            disabled={!['delivered', 'shared'].includes(status)}
             onClick={(e) => handleBtnClick(e, 'VIEW_ARRIVAL')}
           >
             도착정보 확인
@@ -151,9 +150,9 @@ export const MyPageGroupBuyCard = ({ item, isHost, onAction }: MyPageGroupBuyCar
     }
   };
 
-  // ✅ 상태 메시지
+  
   const renderStatusMessage = () => {
-    if (isHost && (status === 'shared' || status === 'completed')) {
+    if (isHost && (status === 'shared')) {
       return <div className="text-success small fw-bold mt-1"><i className="bi bi-people-fill me-1"></i>모든 참여자 수령 완료</div>;
     }
     if (!isHost && item.receiveDate) {

@@ -32,7 +32,7 @@ export default function MyPage() {
     return (
         <div className="mobile-container bg-light min-vh-100">
 
-            {/* 1️⃣ 프로필 섹션 (헤더 없이 여기서부터 시작) */}
+            
             <MyPageProfileCard
                 member={member}
                 isOwner={isOwner}

@@ -6,7 +6,8 @@ import defaultProfile from "@/assets/user.png";
 
 import type { Recipe } from "../services/data/RecipeHomeData";
 
-import { DifficultyFormat } from "../services/data/DifficultyFormat";
+
+import { getDifficultyText } from "../services/data/DifficultyText";
 
 
 export interface RecipeCardProps {
@@ -84,7 +85,7 @@ export const RecipeCard = ({
           </span>
           <span className="text-secondary me-3">
 
-            <i className="bi bi-star"></i> {DifficultyFormat(difficulty)}
+            <i className="bi bi-star"></i> {getDifficultyText(difficulty)}
 
           </span>
           <span>

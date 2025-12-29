@@ -46,18 +46,10 @@ const navigate = useNavigate();
   const handleReport = async (targetNo: number) => {
         if (isOwner) return;
 
-        const reason = window.prompt("신고 사유를 입력해주세요.");
+        
         if (!reason) return;
 
-        try {
-           
-            console.log(`신고 대상: ${targetNo}, 사유: ${reason}`);
-            
-           
-        } catch (error) {
-            console.error("신고 실패:", error);
-         
-        }
+       
     };
 
 
@@ -66,12 +58,12 @@ const navigate = useNavigate();
     const handleLogout = () => {
      
       sessionStorage.removeItem("au");
-      window.location.href = "/login";
+      navigate(`/login`);
     
   };
 
   const handleWithdraw = () => {
-    console.log("탈퇴 버튼");
+    //탈퇴 임
   };
 
 
@@ -114,7 +106,7 @@ const navigate = useNavigate();
         setGroupBuys(formattedHost); 
 
       } catch (error) {
-        console.error("마이페이지 로딩 실패:", error);
+        // 모달 대체
       } finally {
         setIsLoading(false);
       }
