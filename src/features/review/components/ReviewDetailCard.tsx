@@ -3,7 +3,9 @@ import { useState } from "react";
 import spicyIcon from "../../../assets/spicy.png";
 import user from "../../../assets/user.png";
 import "../styles/reviewDetailCard.css";
-import { DateFormat } from "../../../shared/utils/DateFormat";
+
+import { DateFormat } from "@/shared/services/data/DateFormat";
+
 import { SpicyLevelFormat } from "@/shared/services/data/SpicyLevelFormat";
 import type { Review } from "../services/data/ReviewData";
 

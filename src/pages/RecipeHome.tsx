@@ -24,7 +24,7 @@ export default function RecipeHome() {
     setSort,
   } = useRecipeHome();
 
-  console.log(recipes);
+  
   return (
     <>
       {/* 검색 */}

@@ -8,5 +8,5 @@ export const SpicyLevelFormat = (level: number): string => {
         4: '불닭맵기',
         5: '불닭보다매워요',
     };
-    return spicyMap[level] || '';
+    return spicyMap[level] || level;
 };

@@ -1,89 +1,128 @@
-import { RecipeCard } from "../shared/components/RecipeCard";
-import { ReviewCard } from "@/shared/components/ReviewCard";
+import { useMyPage } from "@/features/mypage/hooks/useMyPage";
+
+import { MyPageProfileCard } from "@/features/mypage/components/MyPageProfile";
+
+import { ReviewCard, type ReviewCardProps } from "@/shared/components/ReviewCard";
+import { MyPageRecipeCard, type MyPageRecipe } from "@/features/mypage/components/MyPageRecipeCard";
+import { MyPageGroupBuyCard, type GroupBuyItem } from "@/features/mypage/components/MyPageGroupBuyCard";
+
+import "@/features/mypage/styles/mypage.css";
 
 
-export default function MyPage(){
-   
-    const dummyRecipe = {
-    recipeNo: 101,
-    title: "초간단 10분 컷! 돼지고기 김치찌개",
-    thumbnail: "https://placehold.co/600x400/orange/white?text=Food", // 임시 이미지
-    nickname: "자취요리왕",
-    profileImage: undefined, // 임시 프로필
-    rating: 4.8,
-    reviewCount: 342,
-    servings: 2,
-    makeTime: 20,
-    difficulty: "쉬움",
-    spicy: 3
-  };
+export default function MyPage() {
 
-  const dummyReview = {
-    reviewNo: 501,
-    reviewImage: "https://placehold.co/600x400/blue/white?text=Review",
-    writerNickname: "맛나꿈나무",
-    writerProfileImage: undefined, 
-    title: "진짜 너무 맛있어요! 다음에 또 해먹을게요.",
-    rating: 5,
-    inDate: new Date() // 오늘 날짜
-  };
+    const {
+        member, isOwner, recipes, reviews, groupBuys, isLoading,
+        activeMainTab, setActiveMainTab, contentSubTab, setContentSubTab,
+        groupSubTab, setGroupSubTab, groupFilter, setGroupFilter, totalGroupCount,
+        handleDeleteRecipe,
+        handleLogout,
+        handleReport, handleGroupAction,
+        handleReviewClick, handleWithdraw
+    } = useMyPage();
 
 
-   
 
-  const handleCardClick = (id: number) => {
-    alert(`${id}번 레시피를 클릭하셨습니다! 상세 페이지로 이동합니다.`);
-    console.log("클릭된 레시피 번호:", id);
-  };
 
-  const handleReviewClick = (no: number) => {
-    alert(`${no}번 리뷰 상세 페이지로 이동합니다.`);
-  };
 
-   return(
-    <>
-      {/* 부트스트랩 컨테이너로 감싸서 중앙 정렬 및 여백 주기 */}
-      <div className="container mt-5">
-        <h2>홈 화면입니다</h2>
-        
-        <div className="row">
-          {/* 모바일에서는 꽉 차게(col-12), 태블릿 이상에서는 6칸(col-md-6) 차지 */}
-          <div className="col-12 col-md-6 col-lg-4">
+    if (isLoading) return <div className="p-5 text-center">데이터를 가져오는 중...</div>;
+
+
+
+    return (
+        <div className="mobile-container bg-light min-vh-100">
+
             
-            {/* 4. 컴포넌트 사용하기 */}
-            <RecipeCard
-              recipeNo={dummyRecipe.recipeNo}
-              thumbnail={dummyRecipe.thumbnail}
-              title={dummyRecipe.title}
-              nickname={dummyRecipe.nickname}
-              profileImage={dummyRecipe.profileImage}
-              rating={dummyRecipe.rating}
-              reviewCount={dummyRecipe.reviewCount}
-              servings={dummyRecipe.servings}
-              makeTime={dummyRecipe.makeTime}
-              difficulty={dummyRecipe.difficulty}
-              spicy={dummyRecipe.spicy}
-              onClickDetail={handleCardClick} // 함수 전달
+            <MyPageProfileCard
+                member={member}
+                isOwner={isOwner}
+                onReport={handleReport}
+                onLogout={handleLogout}
+                // onWithdraw={handleWithdraw}
+                onEditInfo={() => console.log("모달 띄우기")}
             />
+
+
+            {/* 통계 탭 */}
+            <section className="stats-tabs d-flex text-center border-top border-bottom bg-white">
+                <div className={`tab-item w-50 py-3 pointer ${activeMainTab === 'content' ? 'active' : ''}`}
+                    onClick={() => setActiveMainTab('content')}>
+                    <strong className="d-block fs-4">{recipes.length}</strong>
+                    <span className="text-secondary small">레시피</span>
+                </div>
+                <div className={`tab-item py-3 w-50 pointer ${activeMainTab === 'group' ? 'active' : ''}`}
+                    onClick={() => setActiveMainTab('group')}>
+                    <strong className="d-block fs-4">{totalGroupCount}</strong>
+                    <span className="text-secondary small">공동구매</span>
+                </div>
+            </section>
+
+            <div className="p-3">
+                {activeMainTab === 'content' ? (
+                    <>
+                        <div className="btn-group w-100 mb-3 shadow-sm">
+                            <button className={`btn btn-sm ${contentSubTab === 'recipe' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => setContentSubTab('recipe')}>레시피</button>
+                            <button className={`btn btn-sm ${contentSubTab === 'review' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => setContentSubTab('review')}>후기</button>
+                        </div>
+                        <div className="grid-container mypage-review-list">
+                            {contentSubTab === 'recipe' ?
+                                recipes.map((r: MyPageRecipe) => (
+                                    <MyPageRecipeCard
+
+                                        key={r.id}
+                                        item={r}
+                                        isOwner={isOwner}
+                                        
+                                        onDelete={() => handleDeleteRecipe(r.id)}
+                                    />
+                                )) :
+                                reviews.map((rv: ReviewCardProps) => (
+                                    <ReviewCard
+                                        key={rv.reviewNo}
+                                        {...rv}
+                                        
+                                        onClickDetail={() => handleReviewClick(rv.reviewNo)}
+                                    />
+                                ))
+                            }
+                        </div>
+                    </>
+                ) : (
+                    <div id="group-section-wrapper">
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                            <div className="btn-group btn-group-sm">
+                                <button className={`btn ${groupSubTab === 'host' ? 'btn-success' : 'btn-outline-success'}`} onClick={() => setGroupSubTab('host')}>개설</button>
+                                <button className={`btn ${groupSubTab === 'participate' ? 'btn-success' : 'btn-outline-success'}`} onClick={() => setGroupSubTab('participate')}>참여</button>
+                            </div>
+                            <select className="form-select form-select-sm w-auto border-success" value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
+                                <option value="ALL">전체</option>
+                                <option value="OPEN">모집중</option>
+                                <option value="CLOSED">모집마감</option>
+                                <option value="PAID">결제완료</option>
+                                <option value="DELIVERED">도착완료</option>
+                                <option value="SHARED">나눔완료</option>
+                            </select>
+                        </div>
+
+                        <div id="group-list" className="grid-container">
+                            {groupBuys.length > 0 ? (
+
+                                groupBuys.map((item: GroupBuyItem) => (
+                                    <MyPageGroupBuyCard
+                                        key={item.groupBuyNo}
+                                        item={item}
+                                        
+                                        isHost={groupSubTab === 'host'}
+                                        onAction={(handleGroupAction)}
+                                    />
+                                ))
+                            ) : (
+                                <div className="text-center py-5 text-muted">내역이 없습니다.</div>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
-
-            {/* --- 리뷰 카드 섹션 --- */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <h5 className="mb-3">내가 쓴 리뷰</h5>
-          <ReviewCard
-            reviewNo={dummyReview.reviewNo}
-            reviewImage={dummyReview.reviewImage}
-            writerNickname={dummyReview.writerNickname}
-            writerProfileImage={dummyReview.writerProfileImage}
-            title={dummyReview.title}
-            rating={dummyReview.rating}
-            inDate={dummyReview.inDate}
-            onClickDetail={handleReviewClick}
-          />
-
-          </div>
         </div>
-      </div>
-      </>
-  );
+    );
 }

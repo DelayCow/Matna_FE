@@ -7,6 +7,7 @@ export const useReviewDetail = (recipeNo:string) => {
     
     useEffect(()=>{
         if(recipeNo === "") return;
+        
         const loadReviewList = async () => {
         try {
             const result = await ReviewDetailApi(recipeNo);
