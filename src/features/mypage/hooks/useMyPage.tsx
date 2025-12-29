@@ -11,7 +11,9 @@ import type { MyPageGroupBuy } from "../components/MyPageGroupBuyCard";
 
 export const useMyPage = () => {
 
-  const { id } = useParams<{ id: string }>();
+const navigate = useNavigate();
+
+  const { memberNo: paramMemberNo } = useParams<{ memberNo: string }>();
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [member, setMember] = useState<MemberProfile | null>(null);
   const [recipes, setRecipes] = useState<MyPageRecipe[]>([]);
@@ -25,6 +27,11 @@ export const useMyPage = () => {
 
   const [totalGroupCount, setTotalGroupCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+
+  const handleReviewClick = (reviewNo: number) => {
+    navigate(`/review/detail/${reviewNo}`);
+  };
   
 const handleGroupAction = async (action: string, item: GroupBuyItem) => {
     try {
@@ -75,7 +82,8 @@ const handleGroupAction = async (action: string, item: GroupBuyItem) => {
             const detailUrl = item.periodGroupBuyNo 
                 ? `/periodGroupBuy/detail/${item.periodGroupBuyNo}` 
                 : `/quantityGroupBuy/detail/${item.quantityGroupBuyNo}`;
-            window.location.href = detailUrl;
+            // window.location.href = detailUrl;
+            navigate(detailUrl);
             break;
 
         default:
@@ -157,7 +165,7 @@ const handleGroupAction = async (action: string, item: GroupBuyItem) => {
         const currentUser = await MyPageApi.fetchCurrentUser();
         
 
-        const targetMemberNo = id ? parseInt(id) : currentUser.memberNo;
+       const targetMemberNo = paramMemberNo ? parseInt(paramMemberNo) : currentUser.memberNo;
 
 
         setIsOwner(targetMemberNo === currentUser.memberNo);
@@ -192,7 +200,7 @@ const handleGroupAction = async (action: string, item: GroupBuyItem) => {
       }
     };
     initMyPage();
-  }, [id]);
+  }, [paramMemberNo]);
 
   // 2. 탭/필터 변경 시 공동구매 데이터 리로드
   useEffect(() => {
@@ -221,7 +229,7 @@ const handleGroupAction = async (action: string, item: GroupBuyItem) => {
     groupFilter, setGroupFilter,
     isOwner, handleDeleteRecipe,
     handleLogout, handleReport,
-    handleGroupAction
+    handleGroupAction, handleReviewClick
     // handleEditInfo
   };
 };

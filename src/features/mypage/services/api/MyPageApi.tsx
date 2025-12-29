@@ -62,7 +62,20 @@ const MyPageApi = {
       receiveDate: `${today}T00:00:00` // DB 형식에 맞춰 시간 추가
     });
     return response.data;
+  },
+
+  ReviewDetail: async (reviewNo: number) => {
+    const response = await AxiosInterceptor.get(`/api/review/detail/{reviewNo}`);
+    return response.data;
+  },
+
+
+  deleteReview: async (reviewNo: number) => {
+    const response = await AxiosInterceptor.delete(`/api/reviews/${reviewNo}`);
+    return response.data;
   }
+
+
 
 };
 

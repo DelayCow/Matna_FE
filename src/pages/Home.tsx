@@ -99,7 +99,7 @@ export default function Home() {
             >
                 {reviews.map((item: ReviewCardProps) => (
                     <div key={item.reviewNo} className="flex-shrink-0" style={{ width: '300px' }}>
-                        <ReviewCard {...item} onClickDetail={(no) => console.log(no)} />
+                        <ReviewCard {...item} onClickDetail={(no) => navigate(`/review/detail/${no}`)} />
                     </div>
                 ))}
             </HomeSection>

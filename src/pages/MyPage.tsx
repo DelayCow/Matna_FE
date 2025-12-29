@@ -10,33 +10,34 @@ import "@/features/mypage/styles/mypage.css";
 
 
 export default function MyPage() {
- 
+
     const {
         member, isOwner, recipes, reviews, groupBuys, isLoading,
         activeMainTab, setActiveMainTab, contentSubTab, setContentSubTab,
         groupSubTab, setGroupSubTab, groupFilter, setGroupFilter, totalGroupCount,
-        handleDeleteRecipe, 
-        handleLogout,       
-        handleReport
+        handleDeleteRecipe,
+        handleLogout,
+        handleReport, handleGroupAction,
+        handleReviewClick
     } = useMyPage();
 
-   
 
-   
+
+
 
     if (isLoading) return <div className="p-5 text-center">데이터를 가져오는 중...</div>;
 
-   
+
 
     return (
         <div className="mobile-container bg-light min-vh-100">
-            
+
             {/* 1️⃣ 프로필 섹션 (헤더 없이 여기서부터 시작) */}
-            <MyPageProfileCard 
-                member={member} 
-                isOwner={isOwner} 
-                onReport={handleReport} 
-                onLogout={handleLogout} 
+            <MyPageProfileCard
+                member={member}
+                isOwner={isOwner}
+                onReport={handleReport}
+                onLogout={handleLogout}
                 onEditInfo={() => console.log("모달 띄우기")}
             />
 
@@ -45,8 +46,8 @@ export default function MyPage() {
             <section className="stats-tabs d-flex text-center border-top border-bottom bg-white">
                 <div className={`tab-item w-50 py-3 pointer ${activeMainTab === 'content' ? 'active' : ''}`}
                     onClick={() => setActiveMainTab('content')}>
-                    <strong className="d-block fs-4">{recipes.length + reviews.length}</strong>
-                    <span className="text-secondary small">활동</span>
+                    <strong className="d-block fs-4">{recipes.length}</strong>
+                    <span className="text-secondary small">레시피</span>
                 </div>
                 <div className={`tab-item py-3 w-50 pointer ${activeMainTab === 'group' ? 'active' : ''}`}
                     onClick={() => setActiveMainTab('group')}>
@@ -66,7 +67,7 @@ export default function MyPage() {
                             {contentSubTab === 'recipe' ?
                                 recipes.map((r: MyPageRecipe) => (
                                     <MyPageRecipeCard
-                                        
+
                                         key={r.id}
                                         item={r}
                                         isOwner={isOwner}
@@ -75,7 +76,12 @@ export default function MyPage() {
                                     />
                                 )) :
                                 reviews.map((rv: ReviewCardProps) => (
-                                    <ReviewCard key={rv.reviewNo} {...rv} onClickDetail={() => { }} />
+                                    <ReviewCard
+                                        key={rv.reviewNo}
+                                        {...rv}
+                                        // 🛠️ onClickDetail에 handleReviewClick을 연결합니다.
+                                        onClickDetail={() => handleReviewClick(rv.reviewNo)}
+                                    />
                                 ))
                             }
                         </div>
@@ -99,14 +105,14 @@ export default function MyPage() {
 
                         <div id="group-list" className="grid-container">
                             {groupBuys.length > 0 ? (
-                                // ✅ any 제거 완료
+
                                 groupBuys.map((item: GroupBuyItem) => (
                                     <MyPageGroupBuyCard
                                         key={item.groupBuyNo}
                                         item={item}
                                         // step={item.step}
                                         isHost={groupSubTab === 'host'}
-                                        onAction={(action, data) => console.log(action, data)}
+                                        onAction={(handleGroupAction)}
                                     />
                                 ))
                             ) : (

@@ -247,3 +247,54 @@
 .mypage-review-list .card-text.text-truncate {
     margin-left: 0 !important;
 }
+
+/* 1. 이미지 높이와 비율 통일 (가장 중요!) */
+.card-custom .card-img-top {
+    height: 150px; /* 높이를 딱 고정 */
+    object-fit: cover; /* 이미지가 찌그러지지 않게 꽉 채움 */
+    width: 100%;
+}
+
+/* 2. 카드 전체 높이 통일 */
+.card-custom {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* 그리드 안에서 높이를 똑같이 맞춤 */
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.card-custom .card-body {
+    flex-grow: 1; /* 내용이 적어도 카드가 줄어들지 않고 공간을 차지함 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 3. 그리드 간격 미세 조정 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2열 유지 */
+    gap: 12px; /* 간격을 살짝 좁히면 폰트가 덜 커 보임 */
+    padding: 10px 0;
+}
+
+.grid-container > .card-custom {
+    width: 100% !important;
+    margin: 0 !important; /* 외부 여백 제거로 너비 차이 방지 */
+    box-sizing: border-box;
+}
+
+/* 2. 카드 바디 여백 통일 */
+/* 레시피 카드와 리뷰 카드의 내부 여백이 다르면 크기가 달라 보입니다 */
+.card-custom .card-body {
+    padding: 12px !important; /* px-0 같은 부트스트랩 클래스보다 우선 적용 */
+}
+
+/* 3. 리뷰 카드 텍스트 시작점 정렬 */
+/* 프로필을 숨겼으므로 텍스트가 너무 왼쪽으로 붙지 않게 조절 */
+.mypage-review-list .card-text.text-truncate {
+    margin-left: 0 !important;
+    padding-left: 5px; /* 시각적으로 레시피 카드 제목 위치와 맞춤 */
+}
