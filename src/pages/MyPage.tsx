@@ -96,11 +96,11 @@ export default function MyPage() {
                             </div>
                             <select className="form-select form-select-sm w-auto border-success" value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
                                 <option value="ALL">전체</option>
-                                <option value="OPEN">모집중</option>
-                                <option value="CLOSED">모집마감</option>
-                                <option value="PAID">결제완료</option>
-                                <option value="DELIVERED">도착완료</option>
-                                <option value="SHARED">나눔완료</option>
+                                <option value="open">모집중</option>
+                                <option value="closed">모집마감</option>
+                                <option value="paid">결제완료</option>
+                                <option value="delivered">도착완료</option>
+                                <option value="shared">나눔완료</option>
                             </select>
                         </div>
 
