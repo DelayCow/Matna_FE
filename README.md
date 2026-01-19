@@ -1,7 +1,44 @@
+# Matna Refactoring
+
+# 🍳 레시피 및 공동구매 플랫폼 - 맛나
+<p align="center"><img width="677" height="369" alt="matna_logo" src="https://github.com/user-attachments/assets/914ac58d-b6c9-432e-9aec-e60bae2c3131" /></p>
+
+## 🍽️ 맛나 플랫폼 소개
+맛나는 식재료 소비가 빠르지 않은 1인 가구를 위한 **식재료 공동구매**와 후기를 통한 대체재료 정보를 포함한 **레시피를 제공**하는 서비스입니다.<br>
+
+## 🍽️ 프로젝트 기간 
+**1차 springboot기반 구현: 2025.11.17 ~ 2025.12.05(3주)**<br/>
+**2차 뷰 서버 분리(리액트) 리팩토링: 2025.12.17 ~ 2025.12.30(2주)**
+
+## 🍽️ 팀 소개
+| 지연우 | 박세희 | 심재용 | 황혁준 |
+|:------:|:------:|:------:|:------:|
+| <img src="https://avatars.githubusercontent.com/u/110551002?v=4" alt="지연우" width="150"> | <img src="https://avatars.githubusercontent.com/u/237663119?v=4" alt="박세희" width="170"> |<img src="https://avatars.githubusercontent.com/u/102509662?v=4" alt="심재용" width="170"> |<img src="https://avatars.githubusercontent.com/u/225848337?v=4" alt="황혁준" width="170"> |
+| [@wldusdn](https://github.com/wldusdn) | [@shpark091](https://github.com/shpark091) | [@reeuse](https://github.com/reeuse) | [@CoffeCodeTV](https://github.com/CoffeCodeTV) |
+| 팀장<br/>일정 및 업무분담(jira)<br/>시큐어코딩, 리액트구조설계<br/>홈&레시피api연동<br/>마이페이지 repository 구현 및 단위테스트 | 자료문서화<br/>외부api 연동(지도,S3)<br/>공동구매 api연동 및 repository 구현 및 단위테스트 | Git 관리, 시큐어코딩<br/>관리자 api연동 및 repository 구현 밎 단위 테스트 | 업무명세서관리<br/>마이페이지 service 구현 및 단위테스트   |
+
+## 🍽️ 주요 기능 
+- **🍕 레시피**
+  -   **사용자 기반 대체재료 정보 제공**: 레시피 후기 등록 시 사용자가 실제 활용한 '대체 재료' 정보를 수집하여, 조회 시 함께 제공
+  -   **공동구매 연계**: 레시피에 포함된 식재료가 현재 공동구매 진행 중인지 여부 노출
+  -   **개인화 검색 및 필터링**: 사용자의 취향을 고려한 매운맛 단계별 필터링, 검색 기능 및 다양한 정렬 조건(최신순, 후기순 등)을 지원
+
+- **🪙 공동구매**
+  - **기간형 공동구매** : 정해진 기간 내 모집된 인원이 전체 비용을 균등하게 분할하여 참여하는 유연한 공동구매 모델
+  - **수량형 공동구매** : 사용자가 원하는 필요 수량을 직접 선택하여 참여하며, 목표 수량 도달 시 체결되는 방식의 공동구매 모델
+
+- **👮 관리자 기능**
+  - **회원관리** : 서비스 가이드라인을 위반한 회원을 식별하고 활동 정지 등의 제재 조치를 관리
+  - **재료관리** : 레시피와 공동구매 서비스의 기준이 되는 식재료를 표준화하여 관리
+  - **공구관리** : 진행 중인 공동구매의 이상 징후 포착 시 즉시 중단시키거나 상태 제어
+  - **신고관리** : 회원 및 게시물(공동구매) 관련 신고 접수 건을 검토 후 처리
+
+## 🍽️ Software Architecture
+<img width="1332" height="692" alt="2차 SW 아키텍처" src="https://github.com/user-attachments/assets/884eea0b-1b0e-4be8-a267-ea55ebd6c300" />
+
+## 🍽️ React Directory
 <img width="466" height="426" alt="image" src="https://github.com/user-attachments/assets/9c4e56ca-586e-4f34-853a-6149e117ab39" />
 
-
-# Matna
 
 ## 📌 Git Branch & Commit Convention
 
@@ -47,3 +84,4 @@ feat: Added login
 fix: Fixed appointment registration error
 style: Improved manager main page UI
 ```
+
